@@ -1,10 +1,22 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { IoEye, IoEyeOff } from "react-icons/io5";
 import logo from "/public/logo.svg";
 import FloatingDotsBackground from "../../shared/FloatingDotsBackground";
+import { useNavigate } from "react-router-dom";
+import { StoreContext } from "../../context/StoreContext";
 
 const SignUpForm = () => {
+  const navigate = useNavigate();
+  const { setIsPopUpOpen } = useContext(StoreContext);
   const [passwordShown, setPasswordShown] = useState(false);
+
+  const handleClick = () => {
+    navigate("/home");
+    setTimeout(() => {
+      setIsPopUpOpen(true);
+    }, 1500);
+  };
+
   return (
     <div className="py-4 flex items-center justify-center relative min-h-screen shadow-xl bg-gradient-to-br from-lightGreen to-paleGreen">
       <FloatingDotsBackground numberOfDots={40} />
@@ -140,6 +152,7 @@ const SignUpForm = () => {
             <button
               className="w-fit font-semibold text-[#2ecc71]"
               type="button"
+              onClick={handleClick}
             >
               Sign in
             </button>
