@@ -9,6 +9,11 @@ const LoginForm = () => {
   const [passwordShown, setPasswordShown] = useState(false);
   const { isPopUpOpen, setIsPopUpOpen } = useContext(StoreContext);
   const navigate = useNavigate();
+  const handleClick = () => {
+    setIsPopUpOpen(false);
+    navigate("/signup");
+  };
+
   return (
     <AnimatePresence>
       {isPopUpOpen && (
@@ -100,7 +105,7 @@ const LoginForm = () => {
               <button
                 className="w-fit font-semibold text-[#2ecc71]"
                 type="button"
-                onClick={() => navigate("/signup")}
+                onClick={handleClick}
               >
                 Sign up
               </button>
