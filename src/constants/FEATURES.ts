@@ -1,6 +1,6 @@
 import feature1Img from "../assets/feature1.jpeg";
-import feature2Img from "../assets/feature2.jpeg"
-import feature3Img from "../assets/feature3.jpeg"
+import feature2Img from "../assets/feature2.jpeg";
+import feature3Img from "../assets/feature3.jpeg";
 
 export const features = [
   {
