@@ -1,19 +1,17 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { IoEye, IoEyeOff } from "react-icons/io5";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import { IoClose } from "react-icons/io5";
+import { StoreContext } from "../../context/StoreContext";
 
-interface PopUpFormProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
-
-const LoginForm = ({ isOpen, onClose }: PopUpFormProps) => {
+const LoginForm = () => {
   const [passwordShown, setPasswordShown] = useState(false);
+  const { isPopUpOpen, setIsPopUpOpen } = useContext(StoreContext);
   const navigate = useNavigate();
   return (
     <AnimatePresence>
-      {isOpen && (
+      {isPopUpOpen && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -25,7 +23,7 @@ const LoginForm = ({ isOpen, onClose }: PopUpFormProps) => {
             animate={{ backdropFilter: "blur(8px)" }}
             exit={{ backdropFilter: "blur(0px)" }}
             className="fixed inset-0 bg-black bg-opacity-50"
-            onClick={onClose} // Close the pop-up when clicking outside
+            onClick={() => setIsPopUpOpen(false)} // Close the pop-up when clicking outside
           />
           <motion.div
             initial={{ opacity: 0, y: -50 }}
@@ -33,7 +31,16 @@ const LoginForm = ({ isOpen, onClose }: PopUpFormProps) => {
             exit={{ opacity: 0, y: -50 }}
             className="relative bg-gray-800 bg-opacity-90 rounded-lg shadow-lg p-6 max-w-md w-full"
           >
-            <h1 className="text-4xl text-white font-semibold">Login</h1>
+            <div className="flex items-center justify-between">
+              <h1 className="text-4xl text-white font-semibold">Login</h1>
+
+              <IoClose
+                onClick={() => setIsPopUpOpen(false)}
+                fill="white"
+                fontSize={40}
+                className="cursor-pointer"
+              />
+            </div>
 
             <form className="flex flex-col gap-5 mt-8">
               <div className="flex flex-col gap-1 grow">
