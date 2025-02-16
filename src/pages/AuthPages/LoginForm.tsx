@@ -56,7 +56,6 @@ const LoginForm = () => {
                   className="px-1 py-1 bg-[#E1F1F1] shadow-sm focus:shadow outline-none w-full focus:ring-2 
                     focus:ring-[#2ecc71] transition duration-300 ease-in-out rounded-sm"
                   type="text"
-                  placeholder="johndoe@gmail.com"
                   id="email"
                 />
               </div>
@@ -89,7 +88,6 @@ const LoginForm = () => {
                   className="px-1 py-1 bg-[#E1F1F1] shadow-sm focus:shadow outline-none w-full focus:ring-2 
                             focus:ring-[#2ecc71] transition duration-300 ease-in-out rounded-sm"
                   type={passwordShown ? "text" : "password"}
-                  placeholder="********"
                   id="passowrd"
                 />
               </div>

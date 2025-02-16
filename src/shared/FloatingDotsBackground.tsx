@@ -16,7 +16,7 @@ const FloatingDotsBackground = ({ numberOfDots }: { numberOfDots: number }) => {
   const generateRandomAnimation = () => {
     const y = Math.random() * 100 - 50; // Random vertical movement (-50 to 50)
     const x = Math.random() * 100 - 50; // Random horizontal movement (-50 to 50)
-    const duration = 3 + Math.random() * 3; // Random duration between 3 and 6 seconds
+    const duration = 6 + Math.random() * 6; // Random duration between 6 and 12 seconds (slower)
     return { y, x, duration };
   };
 
