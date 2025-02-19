@@ -4,11 +4,41 @@ import logo from "/public/logo.svg";
 import FloatingDotsBackground from "../../shared/FloatingDotsBackground";
 import { useNavigate } from "react-router-dom";
 import { StoreContext } from "../../context/StoreContext";
+import { useForm } from "react-hook-form";
+import axios from "axios";
+import { authUrls } from "../../constants/END_POINTS";
+
+interface SignUpFormData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber: string;
+  age: number;
+  gender: string;
+  password: string;
+}
 
 const SignUpForm = () => {
   const navigate = useNavigate();
   const { setIsPopUpOpen } = useContext(StoreContext);
   const [passwordShown, setPasswordShown] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SignUpFormData>();
+
+  const onSubmit = async (data: SignUpFormData) => {
+    try {
+      const response = await axios.post(authUrls.register, data);
+      console.log("Signup successful:", response.data);
+      // Handle success (e.g., show a success message, navigate to another page)
+    } catch (error) {
+      console.error("Signup error:", error);
+      // Handle error (e.g., show an error message)
+    }
+  };
 
   const handleClick = () => {
     navigate("/home");
@@ -28,7 +58,7 @@ const SignUpForm = () => {
         </div>
         <h1 className="text-4xl font-semibold">Sign up</h1>
 
-        <form className="flex flex-col gap-5 mt-8">
+        <form className="flex flex-col  mt-8" onSubmit={handleSubmit(onSubmit)}>
           <div className="flex flex-row gap-4 max-sm:flex-col">
             <div className="flex flex-col gap-1 grow">
               <label className="font-medium" htmlFor="firstname">
@@ -39,7 +69,15 @@ const SignUpForm = () => {
                     focus:ring-[#2ecc71] transition duration-300 ease-in-out rounded-sm"
                 type="text"
                 id="firstname"
+                {...register("firstName", {
+                  required: "First name is required",
+                })}
               />
+              {errors.firstName && (
+                <span className="text-red-600 text-sm">
+                  {errors.firstName.message}
+                </span>
+              )}
             </div>
             <div className="flex flex-col gap-1 grow">
               <label className="font-medium" htmlFor="lastname">
@@ -50,10 +88,16 @@ const SignUpForm = () => {
                     focus:ring-[#2ecc71] transition duration-300 ease-in-out rounded-sm"
                 type="text"
                 id="lastname"
+                {...register("lastName", { required: "Last name is required" })}
               />
+              {errors.lastName && (
+                <span className="text-red-600 text-sm">
+                  {errors.lastName.message}
+                </span>
+              )}
             </div>
           </div>
-          <div className="flex flex-row gap-4 max-sm:flex-col">
+          <div className="flex flex-row gap-4 max-sm:flex-col mt-5">
             <div className="flex flex-col gap-1 basis-1/2">
               <label className="font-medium" htmlFor="age">
                 Age
@@ -62,9 +106,17 @@ const SignUpForm = () => {
                 className="px-1 py-1 bg-[#E1F1F1] shadow-sm focus:shadow outline-none w-full focus:ring-2 
                     focus:ring-[#2ecc71] transition duration-300 ease-in-out rounded-sm"
                 type="number"
-                min={0}
                 id="age"
+                {...register("age", {
+                  required: "Age is required",
+                  min: { value: 16, message: "Minimum age is 16" },
+                })}
               />
+              {errors.age && (
+                <span className="text-red-600 text-sm">
+                  {errors.age.message}
+                </span>
+              )}
             </div>
             <div className="flex flex-col gap-1 basis-1/2">
               <label className="font-medium" htmlFor="gender">
@@ -74,25 +126,39 @@ const SignUpForm = () => {
                 className="py-1 bg-[#E1F1F1] shadow-sm focus:shadow outline-none w-full h-full focus:ring-2 
                     focus:ring-[#2ecc71] transition duration-300 ease-in-out rounded-sm"
                 id="gender"
+                {...register("gender", { required: "Gender is required" })}
               >
-                <option value="option1"> Male</option>
-                <option value="option2">Female</option>
+                <option value="">Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
               </select>
+              {errors.gender && (
+                <span className="text-red-600 text-sm">
+                  {errors.gender.message}
+                </span>
+              )}
             </div>
           </div>
-          <div className="flex flex-col gap-1 grow">
+          <div className="flex flex-col gap-1 grow mt-5">
             <label className="font-medium" htmlFor="phone">
               Phone Number
             </label>
             <input
               className="px-1 py-1 bg-[#E1F1F1] shadow-sm focus:shadow outline-none w-full focus:ring-2 
-                    focus:ring-[#2ecc71] transition duration-300 ease-in-out rounded-sm"
+                    focus:ring-[#2ecc71] transition duration-300 ease-in-out rounded-sm "
               type="number"
-              min={0}
               id="phone"
+              {...register("phoneNumber", {
+                required: "Phone number is required",
+              })}
             />
+            {errors.phoneNumber && (
+              <span className="text-red-600 text-sm">
+                {errors.phoneNumber.message}
+              </span>
+            )}
           </div>
-          <div className="flex flex-col gap-1 grow">
+          <div className="flex flex-col gap-1 grow mt-5">
             <label className="font-medium" htmlFor="email">
               Email
             </label>
@@ -101,10 +167,22 @@ const SignUpForm = () => {
                     focus:ring-[#2ecc71] transition duration-300 ease-in-out rounded-sm"
               type="text"
               id="email"
+              {...register("email", {
+                required: "Email is required",
+                pattern: {
+                  value: /^\S+@\S+$/i,
+                  message: "Invalid email format",
+                },
+              })}
             />
+            {errors.email && (
+              <span className="text-red-600 text-sm">
+                {errors.email.message}
+              </span>
+            )}
           </div>
           <div className="flex flex-col gap-1 grow">
-            <div className="flex flex-row items-center justify-between">
+            <div className="flex flex-row items-center justify-between mt-5">
               <label className="font-medium" htmlFor="password">
                 Password
               </label>
@@ -133,15 +211,28 @@ const SignUpForm = () => {
                     focus:ring-[#2ecc71] transition duration-300 ease-in-out rounded-sm"
               type={passwordShown ? "text" : "password"}
               id="passowrd"
+              {...register("password", {
+                required: "Password is required",
+                minLength: {
+                  value: 6,
+                  message: "Password must be at least 6 characters long",
+                },
+              })}
             />
+            {errors.password && (
+              <span className="text-red-600 text-sm">
+                {errors.password.message}
+              </span>
+            )}
           </div>
+
           <button
-            className="w-full py-[10px] sm mt-4 bg-green-500 hover:bg-green-600 text-white text-lg font-medium rounded-md shadow-md transition-all duration-200 ease-in-out"
+            className="w-full py-[10px] sm mt-4 bg-green-500 hover:bg-green-600 text-white text-lg font-medium rounded-md shadow-md transition-all duration-200 ease-in-out mt-5"
             type="submit"
           >
             Sign up
           </button>
-          <div className="flex flex-row justify-center flex-wrap gap-2 font-medium pb-5">
+          <div className="flex flex-row justify-center flex-wrap gap-2 font-medium pb-5 mt-2">
             <span className="text-base">Back to grow with us?</span>
             <button
               className="w-fit font-semibold text-[#2ecc71]"
