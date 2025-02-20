@@ -6,6 +6,7 @@ import {
 import Home from "./pages/Home/Home";
 import MasterLayout from "./layouts/MasterLayout";
 import SignUpForm from "./pages/AuthPages/SignUpForm";
+import { ToastContainer } from "react-toastify";
 
 const routes = createBrowserRouter([
   {
@@ -39,6 +40,7 @@ function App() {
   return (
     <>
       <RouterProvider router={routes} />
+      <ToastContainer />
     </>
   );
 }
