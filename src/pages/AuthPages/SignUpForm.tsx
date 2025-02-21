@@ -4,23 +4,16 @@ import logo from "/public/logo.svg";
 import FloatingDotsBackground from "../../shared/FloatingDotsBackground";
 import { useNavigate } from "react-router-dom";
 import { StoreContext } from "../../context/StoreContext";
+import { SignUpFormData } from "../../interfaces/interfaces";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { authUrls } from "../../constants/END_POINTS";
-
-interface SignUpFormData {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phoneNumber: string;
-  age: number;
-  gender: string;
-  password: string;
-}
+import { AxiosError } from "axios";
+import { toast } from "react-toastify";
 
 const SignUpForm = () => {
   const navigate = useNavigate();
-  const { setIsPopUpOpen } = useContext(StoreContext);
+  const { setIsPopUpOpen, login } = useContext(StoreContext);
   const [passwordShown, setPasswordShown] = useState(false);
 
   const {
@@ -32,11 +25,17 @@ const SignUpForm = () => {
   const onSubmit = async (data: SignUpFormData) => {
     try {
       const response = await axios.post(authUrls.register, data);
-      console.log("Signup successful:", response.data);
-      // Handle success (e.g., show a success message, navigate to another page)
+
+      if (response.data.token) {
+        // call the login function
+        login(response.data.token);
+      }
+
+      toast.success("Signup successful! 🎉");
+      navigate("/");
     } catch (error) {
-      console.error("Signup error:", error);
-      // Handle error (e.g., show an error message)
+      const axiosError = error as AxiosError<{ error: string }>;
+      toast.error(axiosError.response?.data?.error || "Something went wrong!");
     }
   };
 
@@ -126,17 +125,12 @@ const SignUpForm = () => {
                 className="py-1 bg-[#E1F1F1] shadow-sm focus:shadow outline-none w-full h-full focus:ring-2 
                     focus:ring-[#2ecc71] transition duration-300 ease-in-out rounded-sm"
                 id="gender"
-                {...register("gender", { required: "Gender is required" })}
+                {...register("gender")}
               >
                 <option value="">Select Gender</option>
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
               </select>
-              {errors.gender && (
-                <span className="text-red-600 text-sm">
-                  {errors.gender.message}
-                </span>
-              )}
             </div>
           </div>
           <div className="flex flex-col gap-1 grow mt-5">
