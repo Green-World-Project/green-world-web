@@ -23,3 +23,12 @@ export interface LoginFormData {
   email: string;
   password: string;
 }
+
+export interface userDataTypes {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber: string;
+  age: number;
+  gender: string;
+}
