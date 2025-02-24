@@ -4,11 +4,39 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { IoClose } from "react-icons/io5";
 import { StoreContext } from "../../context/StoreContext";
+import { useForm } from "react-hook-form";
+import { authUrls } from "../../constants/END_POINTS";
+import axios, { AxiosError } from "axios";
+import { LoginFormData } from "../../interfaces/interfaces";
+import { toast } from "react-toastify";
 
 const LoginForm = () => {
   const [passwordShown, setPasswordShown] = useState(false);
-  const { isPopUpOpen, setIsPopUpOpen } = useContext(StoreContext);
+  const { isPopUpOpen, setIsPopUpOpen, login } = useContext(StoreContext);
   const navigate = useNavigate();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginFormData>();
+
+  const onSubmit = async (data: LoginFormData) => {
+    try {
+      const response = await axios.post(authUrls.login, data);
+      if (response.data.token) {
+        // call the login function
+        login(response.data.token);
+        setIsPopUpOpen(false);
+      } else {
+        toast.error(response?.data?.message || "Something went wrong!");
+      }
+    } catch (error) {
+      const axiosError = error as AxiosError<{ error: string }>;
+      toast.error(axiosError.response?.data?.error || "Something went wrong!");
+    }
+  };
+
   const handleClick = () => {
     setIsPopUpOpen(false);
     navigate("/signup");
@@ -47,7 +75,10 @@ const LoginForm = () => {
               />
             </div>
 
-            <form className="flex flex-col gap-5 mt-8">
+            <form
+              className="flex flex-col gap-5 mt-8"
+              onSubmit={handleSubmit(onSubmit)}
+            >
               <div className="flex flex-col gap-1 grow">
                 <label className="font-medium text-white" htmlFor="email">
                   Email
@@ -57,7 +88,19 @@ const LoginForm = () => {
                     focus:ring-[#2ecc71] transition duration-300 ease-in-out rounded-sm"
                   type="text"
                   id="email"
+                  {...register("email", {
+                    required: "Email is required",
+                    pattern: {
+                      value: /^\S+@\S+$/i,
+                      message: "Invalid email format",
+                    },
+                  })}
                 />
+                {errors.email && (
+                  <span className="text-red-500 text-sm">
+                    {errors.email.message}
+                  </span>
+                )}
               </div>
               <div className="flex flex-col gap-1 grow">
                 <div className="flex flex-row items-center justify-between">
@@ -89,7 +132,19 @@ const LoginForm = () => {
                             focus:ring-[#2ecc71] transition duration-300 ease-in-out rounded-sm"
                   type={passwordShown ? "text" : "password"}
                   id="passowrd"
+                  {...register("password", {
+                    required: "Password is required",
+                    minLength: {
+                      value: 6,
+                      message: "Password must be at least 6 characters long",
+                    },
+                  })}
                 />
+                {errors.password && (
+                  <span className="text-red-500 text-sm">
+                    {errors.password.message}
+                  </span>
+                )}
               </div>
               <button
                 className="w-full py-[10px] sm mt-4 bg-green-500 hover:bg-green-600 text-white text-lg font-medium rounded-md shadow-md transition-all duration-200 ease-in-out"
