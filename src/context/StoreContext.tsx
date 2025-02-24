@@ -1,27 +1,35 @@
 import { jwtDecode } from "jwt-decode";
 import { createContext, useState, ReactNode, useEffect } from "react";
 import { useCookies } from "react-cookie";
+import { userDataTypes } from "../interfaces/interfaces";
+import axios from "axios";
+import { authUrls } from "../constants/END_POINTS";
 
 interface StoreContextTypes {
   isPopUpOpen: boolean;
   setIsPopUpOpen: (isOpen: boolean) => void;
   token: string | null;
+  userData: userDataTypes | null;
   login: (token: string) => void;
   logout: () => void;
+  getUserData: () => void;
 }
 
 export const StoreContext = createContext<StoreContextTypes>({
   isPopUpOpen: false,
   setIsPopUpOpen: () => {},
   token: null,
+  userData: null,
   login: () => {},
   logout: () => {},
+  getUserData: () => {},
 });
 
 const StoreContextProvider = ({ children }: { children: ReactNode }) => {
   const [isPopUpOpen, setIsPopUpOpen] = useState(false);
   const [cookies, setCookie, removeCookie] = useCookies(["token"]);
   const [token, setToken] = useState<string | null>(cookies.token || null);
+  const [userData, setUserData] = useState<userDataTypes | null>(null);
 
   // Function to handle user login
   const login = (newToken: string) => {
@@ -39,6 +47,25 @@ const StoreContextProvider = ({ children }: { children: ReactNode }) => {
     setToken(null);
   };
 
+  // Function to get user data
+  const getUserData = async () => {
+    try {
+      if (!token) {
+        return;
+      }
+      const response = await axios.get(authUrls.user, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      setUserData(response.data[0]);
+    } catch (error) {
+      console.error(error);
+      setUserData(null);
+    }
+  };
+
   // Check token expiration
   useEffect(() => {
     if (!token) return;
@@ -47,8 +74,6 @@ const StoreContextProvider = ({ children }: { children: ReactNode }) => {
       const decoded: { exp: number } = jwtDecode(token);
       const expirationTime = decoded.exp * 1000; // Convert to milliseconds
       const currentTime = Date.now();
-
-      console.log(decoded);
 
       if (currentTime >= expirationTime) {
         logout(); // Token expired → Logout
@@ -69,6 +94,8 @@ const StoreContextProvider = ({ children }: { children: ReactNode }) => {
     token,
     login,
     logout,
+    getUserData,
+    userData,
   };
 
   return (
