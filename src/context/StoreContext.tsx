@@ -37,6 +37,7 @@ const StoreContextProvider = ({ children }: { children: ReactNode }) => {
       path: "/",
       sameSite: "strict",
       secure: true,
+      maxAge: 60 * 60 * 24 * 7, // 7 days
     });
     setToken(newToken);
   };
@@ -59,7 +60,7 @@ const StoreContextProvider = ({ children }: { children: ReactNode }) => {
         },
       });
 
-      setUserData(response.data[0]);
+      setUserData(response.data);
     } catch (error) {
       console.error(error);
       setUserData(null);
