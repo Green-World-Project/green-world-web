@@ -5,3 +5,7 @@ export const authUrls = {
   login: `${baseUrl}/login`,
   user: `${baseUrl}/user`,
 };
+
+export const pcs = {
+  create: `${baseUrl}/user/pcs`,
+};
