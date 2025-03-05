@@ -7,6 +7,7 @@ import Home from "./pages/Home/Home";
 import MasterLayout from "./layouts/MasterLayout";
 import SignUpForm from "./pages/AuthPages/SignUpForm";
 import { ToastContainer } from "react-toastify";
+import PlantCare from "./pages/PlantCare/PlantCare";
 
 const routes = createBrowserRouter([
   {
@@ -17,6 +18,10 @@ const routes = createBrowserRouter([
       {
         path: "/home",
         element: <Home />,
+      },
+      {
+        path: "/plantcare",
+        element: <PlantCare />,
       },
       {
         index: true, // Matches the default path "/"
