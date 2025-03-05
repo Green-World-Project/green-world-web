@@ -2,7 +2,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { IoClose } from "react-icons/io5";
 import { useForm } from "react-hook-form";
 import { FormToggleProps, pcsDataTypes } from "../interfaces/interfaces";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { pcs } from "../constants/END_POINTS";
 import { useContext } from "react";
 import { StoreContext } from "../context/StoreContext";
@@ -26,7 +26,8 @@ const AddPlantForm = ({ isFormOpen, setIsFormOpen }: FormToggleProps) => {
       toast.success(response.data);
       setIsFormOpen(false);
     } catch (error) {
-      console.log(error);
+      const axiosError = error as AxiosError<{ error: string }>;
+      toast.error(axiosError.response?.data?.error || "Something went wrong!");
     }
   };
 
