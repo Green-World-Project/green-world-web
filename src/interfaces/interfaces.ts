@@ -3,6 +3,11 @@ export interface HamburgerButtonProps {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+export interface FormToggleProps {
+  isFormOpen: boolean;
+  setIsFormOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
 export interface HamburgerMenuProps {
   isOpen: boolean;
   active: string;
@@ -31,4 +36,10 @@ export interface userDataTypes {
   phoneNumber: string;
   age: number;
   gender: string;
+}
+
+export interface pcsDataTypes {
+  plantName: string;
+  wateringTime: number;
+  watering?: boolean;
 }
