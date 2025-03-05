@@ -41,6 +41,12 @@ body {
   object-fit: cover;
 }
 
+@layer utilities {
+  .container-custom {
+    @apply max-w-[2000px] mx-auto pt-[120px];
+  }
+}
+
 ::-webkit-scrollbar {
   width: 6px;
 }

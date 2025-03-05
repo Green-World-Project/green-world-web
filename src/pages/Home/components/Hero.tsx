@@ -17,7 +17,7 @@ export default function Hero() {
       className="hero bg-custom-gradient 
     "
     >
-      <div className="grid grid-cols-1 md:grid-cols-2 h-screen overflow-hidden max-w-[2000px] mx-auto pt-[120px]">
+      <div className="grid grid-cols-1 md:grid-cols-2 h-screen overflow-hidden container-custom">
         <motion.div
           className="flex flex-col justify-center p-[2rem] lg:p-[4rem]"
           initial="hidden"
