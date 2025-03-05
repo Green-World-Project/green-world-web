@@ -21,10 +21,14 @@ export default function Navbar() {
 
   return (
     <nav className="navbar flex flex-col bg-white bg-opacity-95 backdrop-blur-sm shadow-lg shadow-black/10 fixed top-0 left-0 right-0 z-50 ">
-      <div className="nav-top border-b border-black/10 px-[2rem] md:px-[4rem] py-[1rem] ">
+      <div className="nav-top border-b border-black/10 px-[2rem] md:px-[4rem] py-[1rem]">
         <div className="max-w-[2000px] mx-auto w-full flex items-center justify-between">
           <div className="left-nav flex items-center gap-3">
-            <Link className="flex items-center" to="/">
+            <Link
+              className="flex items-center"
+              to="/"
+              onClick={() => setActive("home")}
+            >
               <div className="pb-2">
                 <img width={45} height={45} src="/logo.svg" alt="logo" />
               </div>
@@ -89,7 +93,7 @@ export default function Navbar() {
               Home
             </Link>
             <Link
-              to="/"
+              to="/plantcare"
               onClick={() => setActive("plant care")}
               className={`nav-tab relative cursor-pointer text-[#2e7d32] ${
                 active === "plant care" ? "active" : ""
