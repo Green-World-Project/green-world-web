@@ -6,6 +6,12 @@ import {
 } from "../interfaces/interfaces";
 import { useContext } from "react";
 import { StoreContext } from "../context/StoreContext";
+import { AiFillHome } from "react-icons/ai";
+import { GiPlantRoots } from "react-icons/gi";
+import { FaUsers } from "react-icons/fa";
+import { CgProfile } from "react-icons/cg";
+import { MdHistory, MdOutlineImageSearch } from "react-icons/md";
+import { RiLogoutBoxRLine } from "react-icons/ri";
 
 export const HamburgerButton = ({
   isOpen,
@@ -42,7 +48,7 @@ export const HamburgerButton = ({
 
 const HamburgerMenu = ({ isOpen, active, setActive }: HamburgerMenuProps) => {
   const navigate = useNavigate();
-  const { token, setIsPopUpOpen } = useContext(StoreContext);
+  const { token, setIsPopUpOpen, logout } = useContext(StoreContext);
   return (
     <motion.div
       className="overflow-hidden bg-white  flex flex-col items-center sm:hidden"
@@ -52,32 +58,75 @@ const HamburgerMenu = ({ isOpen, active, setActive }: HamburgerMenuProps) => {
       <ul className="flex flex-col items-center space-y-4 py-4">
         <Link
           to="/"
-          className={`cursor-pointer text-[#2e7d32] ${
-            active === "home" ? "underline underline-offset-8" : ""
-          }`}
           onClick={() => setActive("home")}
+          className={`nav-tab relative cursor-pointer text-[#2e7d32] flex gap-2 ${
+            active === "home" ? "active" : ""
+          }`}
         >
+          <AiFillHome size={20} />
           Home
         </Link>
         <Link
-          to="/"
-          className={`cursor-pointer text-[#2e7d32] ${
-            active === "plant care" ? "underline underline-offset-8" : ""
-          }`}
+          to="/plantcare"
           onClick={() => setActive("plant care")}
+          className={`nav-tab relative cursor-pointer text-[#2e7d32] flex items-center gap-2 ${
+            active === "plant care" ? "active" : ""
+          }`}
         >
-          Plant care
+          <GiPlantRoots size={20} />
+          Plant Care
         </Link>
-
         <Link
           to="/"
-          className={`cursor-pointer text-[#2e7d32] ${
-            active === "about us" ? "underline underline-offset-8" : ""
-          }`}
           onClick={() => setActive("about us")}
+          className={`nav-tab relative cursor-pointer text-[#2e7d32] flex items-center gap-2 ${
+            active === "about us" ? "active" : ""
+          }`}
         >
+          <FaUsers size={20} />
           About Us
         </Link>
+        {token && (
+          <>
+            <Link
+              to="/"
+              onClick={() => setActive("profile")}
+              className={`nav-tab relative cursor-pointer text-[#2e7d32] flex items-center gap-2 ${
+                active === "profile" ? "active" : ""
+              }`}
+            >
+              <CgProfile size={20} />
+              Profile
+            </Link>
+            <Link
+              to="/"
+              onClick={() => setActive("identify")}
+              className={`nav-tab relative cursor-pointer text-[#2e7d32] flex items-center gap-2 ${
+                active === "identify" ? "active" : ""
+              }`}
+            >
+              <MdOutlineImageSearch size={20} />
+              Identify Plants
+            </Link>
+            <Link
+              to="/"
+              onClick={() => setActive("history")}
+              className={`nav-tab relative cursor-pointer text-[#2e7d32] flex items-center gap-2 ${
+                active === "history" ? "active" : ""
+              }`}
+            >
+              <MdHistory size={20} />
+              History
+            </Link>
+            <button
+              className="flex items-center gap-2"
+              onClick={() => logout()}
+            >
+              <RiLogoutBoxRLine size={20} fill="#2e7d32" />
+              <span className="text-[#2e7d32]">Logout</span>
+            </button>
+          </>
+        )}
       </ul>
       {!token && (
         <div className="flex items-center gap-4 mt-5 pb-5">
