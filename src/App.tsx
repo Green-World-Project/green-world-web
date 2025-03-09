@@ -8,6 +8,7 @@ import MasterLayout from "./layouts/MasterLayout";
 import SignUpForm from "./pages/AuthPages/SignUpForm";
 import { ToastContainer } from "react-toastify";
 import PlantCare from "./pages/PlantCare/PlantCare";
+import Identify from "./pages/Identifiy/Identify";
 
 const routes = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ const routes = createBrowserRouter([
       {
         path: "/home",
         element: <Home />,
+      },
+      {
+        path: "/identify",
+        element: <Identify />,
       },
       {
         path: "/plantcare",
