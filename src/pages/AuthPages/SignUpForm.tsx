@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { IoEye, IoEyeOff } from "react-icons/io5";
-import logo from "/public/logo.svg";
+import logo from "/logo.svg";
 import FloatingDotsBackground from "../../shared/FloatingDotsBackground";
 import { useNavigate } from "react-router-dom";
 import { StoreContext } from "../../context/StoreContext";
