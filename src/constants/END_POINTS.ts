@@ -6,6 +6,9 @@ export const authUrls = {
   user: `${baseUrl}/user`,
 };
 
+export const identify = `${baseUrl}/user/plant-identification`;
+
 export const pcs = {
   create: `${baseUrl}/user/pcs`,
+  get: `${baseUrl}/user/pcs`,
 };
