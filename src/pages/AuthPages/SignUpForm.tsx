@@ -47,7 +47,7 @@ const SignUpForm = () => {
   };
 
   return (
-    <div className="py-4 flex items-center justify-center relative min-h-screen shadow-xl bg-gradient-to-br from-lightGreen to-paleGreen">
+    <div className="py-4 flex items-center justify-center relative min-h-screen bg-gradient-to-br from-lightGreen to-paleGreen">
       <FloatingDotsBackground numberOfDots={40} />
       <div className="bg-white shadow-2xl z-20 py-4 px-7 w-[40%] max-lg:w-[60%] max-md:w-[70%] max-sm:w-[90%] max-w-[700px] rounded-md overflow-y-auto max-h-[95vh]">
         <div className=" flex justify-center">
