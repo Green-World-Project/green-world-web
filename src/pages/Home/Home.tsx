@@ -1,4 +1,4 @@
-import LoginForm from "../AuthPages/LoginForm";
+import LoginForm from "../../shared/LoginForm";
 import FAQ from "./components/FAQ";
 import Features from "./components/Features";
 import Hero from "./components/Hero";

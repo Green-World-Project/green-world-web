@@ -3,11 +3,11 @@ import { IoEye, IoEyeOff } from "react-icons/io5";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { IoClose } from "react-icons/io5";
-import { StoreContext } from "../../context/StoreContext";
+import { StoreContext } from "../context/StoreContext";
 import { useForm } from "react-hook-form";
-import { authUrls } from "../../constants/END_POINTS";
+import { authUrls } from "../constants/END_POINTS";
 import axios, { AxiosError } from "axios";
-import { LoginFormData } from "../../interfaces/interfaces";
+import { LoginFormData } from "../interfaces/interfaces";
 import { toast } from "react-toastify";
 
 const LoginForm = () => {
