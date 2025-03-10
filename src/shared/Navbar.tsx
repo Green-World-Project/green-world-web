@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import HamburgerMenu, { HamburgerButton } from "./HamburgerMenu";
 import { StoreContext } from "../context/StoreContext";
 import { RiLogoutBoxRLine } from "react-icons/ri";
@@ -14,7 +14,7 @@ import { MdHistory, MdOutlineImageSearch } from "react-icons/md";
 export default function Navbar() {
   const { token, setIsPopUpOpen, logout } = useContext(StoreContext);
   const navigate = useNavigate();
-  const [active, setActive] = useState("home");
+  const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -29,11 +29,7 @@ export default function Navbar() {
       <div className="nav-top border-b border-black/10 px-[2rem] lg:px-[3rem] py-[1rem]">
         <div className="max-w-[2000px] mx-auto w-full flex items-center justify-between">
           <div className="left-nav flex items-center gap-3">
-            <Link
-              className="flex items-center"
-              to="/"
-              onClick={() => setActive("home")}
-            >
+            <Link className="flex items-center" to="/">
               <div className="pb-2">
                 <img width={45} height={45} src="/logo.svg" alt="logo" />
               </div>
@@ -42,22 +38,29 @@ export default function Navbar() {
               </span>
             </Link>
           </div>
-          <div className="flex items-center gap-4 max-sm:hidden">
+          <div className="flex items-center gap-5 max-[780px]:hidden">
             <Link
               to="/"
-              onClick={() => setActive("home")}
               className={`nav-tab relative cursor-pointer text-[#2e7d32] flex gap-2 ${
-                active === "home" ? "active" : ""
+                location.pathname === "/home" ? "active" : ""
               }`}
             >
               <AiFillHome size={20} />
               Home
             </Link>
             <Link
-              to="/plantcare"
-              onClick={() => setActive("plant care")}
+              to="/identify"
               className={`nav-tab relative cursor-pointer text-[#2e7d32] flex items-center gap-2 ${
-                active === "plant care" ? "active" : ""
+                location.pathname === "/identify" ? "active" : ""
+              }`}
+            >
+              <MdOutlineImageSearch size={20} />
+              Identify
+            </Link>
+            <Link
+              to="/plantcare"
+              className={`nav-tab relative cursor-pointer text-[#2e7d32] flex items-center gap-2 ${
+                location.pathname === "/plantcare" ? "active" : ""
               }`}
             >
               <GiPlantRoots size={20} />
@@ -65,9 +68,8 @@ export default function Navbar() {
             </Link>
             <Link
               to="/"
-              onClick={() => setActive("about us")}
               className={`nav-tab relative cursor-pointer text-[#2e7d32] flex items-center gap-2 ${
-                active === "about us" ? "active" : ""
+                location.pathname === "/about-us" ? "active" : ""
               }`}
             >
               <FaUsers size={20} />
@@ -110,7 +112,7 @@ export default function Navbar() {
             animate={{ height: "auto" }}
             exit={{ height: 0 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="nav-bottom flex items-center justify-start px-[2.5rem] lg:px-[4rem] max-w-[2130px] max-sm:hidden mx-auto w-full overflow-hidden"
+            className="nav-bottom flex items-center justify-start px-[2.5rem] lg:px-[4rem] max-w-[2130px] max-[780px]:hidden mx-auto w-full overflow-hidden"
           >
             <motion.div
               initial={{ opacity: 0 }}
@@ -121,29 +123,18 @@ export default function Navbar() {
             >
               <Link
                 to="/"
-                onClick={() => setActive("profile")}
                 className={`nav-tab relative cursor-pointer text-[#2e7d32] flex items-center gap-2 ${
-                  active === "profile" ? "active" : ""
+                  location.pathname === "/profile" ? "active" : ""
                 }`}
               >
                 <CgProfile size={20} />
                 Profile
               </Link>
+
               <Link
                 to="/"
-                onClick={() => setActive("identify")}
                 className={`nav-tab relative cursor-pointer text-[#2e7d32] flex items-center gap-2 ${
-                  active === "identify" ? "active" : ""
-                }`}
-              >
-                <MdOutlineImageSearch size={20} />
-                Identify Plants
-              </Link>
-              <Link
-                to="/"
-                onClick={() => setActive("history")}
-                className={`nav-tab relative cursor-pointer text-[#2e7d32] flex items-center gap-2 ${
-                  active === "history" ? "active" : ""
+                  location.pathname === "/history" ? "active" : ""
                 }`}
               >
                 <MdHistory size={20} />
@@ -161,7 +152,7 @@ export default function Navbar() {
         )}
       </AnimatePresence>
 
-      <HamburgerMenu active={active} setActive={setActive} isOpen={isOpen} />
+      <HamburgerMenu isOpen={isOpen} />
     </nav>
   );
 }

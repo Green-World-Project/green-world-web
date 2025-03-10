@@ -10,8 +10,6 @@ export interface FormToggleProps {
 
 export interface HamburgerMenuProps {
   isOpen: boolean;
-  active: string;
-  setActive: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export interface SignUpFormData {

@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import {
   HamburgerButtonProps,
   HamburgerMenuProps,
@@ -46,31 +46,39 @@ export const HamburgerButton = ({
   );
 };
 
-const HamburgerMenu = ({ isOpen, active, setActive }: HamburgerMenuProps) => {
+const HamburgerMenu = ({ isOpen }: HamburgerMenuProps) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { token, setIsPopUpOpen, logout } = useContext(StoreContext);
   return (
     <motion.div
-      className="overflow-hidden bg-white  flex flex-col items-center sm:hidden"
+      className="overflow-hidden bg-white  flex flex-col items-center min-[780px]:hidden"
       initial={{ height: 0 }}
       animate={{ height: isOpen ? "auto" : 0 }}
     >
       <ul className="flex flex-col items-center space-y-4 py-4">
         <Link
           to="/"
-          onClick={() => setActive("home")}
           className={`nav-tab relative cursor-pointer text-[#2e7d32] flex gap-2 ${
-            active === "home" ? "active" : ""
+            location.pathname === "/home" ? "active" : ""
           }`}
         >
           <AiFillHome size={20} />
           Home
         </Link>
         <Link
-          to="/plantcare"
-          onClick={() => setActive("plant care")}
+          to="/identify"
           className={`nav-tab relative cursor-pointer text-[#2e7d32] flex items-center gap-2 ${
-            active === "plant care" ? "active" : ""
+            location.pathname === "/identify" ? "active" : ""
+          }`}
+        >
+          <MdOutlineImageSearch size={20} />
+          Identify
+        </Link>
+        <Link
+          to="/plantcare"
+          className={`nav-tab relative cursor-pointer text-[#2e7d32] flex items-center gap-2 ${
+            location.pathname === "/plantcare" ? "active" : ""
           }`}
         >
           <GiPlantRoots size={20} />
@@ -78,9 +86,8 @@ const HamburgerMenu = ({ isOpen, active, setActive }: HamburgerMenuProps) => {
         </Link>
         <Link
           to="/"
-          onClick={() => setActive("about us")}
           className={`nav-tab relative cursor-pointer text-[#2e7d32] flex items-center gap-2 ${
-            active === "about us" ? "active" : ""
+            location.pathname === "/about-us" ? "active" : ""
           }`}
         >
           <FaUsers size={20} />
@@ -90,33 +97,21 @@ const HamburgerMenu = ({ isOpen, active, setActive }: HamburgerMenuProps) => {
           <>
             <Link
               to="/"
-              onClick={() => setActive("profile")}
               className={`nav-tab relative cursor-pointer text-[#2e7d32] flex items-center gap-2 ${
-                active === "profile" ? "active" : ""
-              }`}
-            >
-              <CgProfile size={20} />
-              Profile
-            </Link>
-            <Link
-              to="/"
-              onClick={() => setActive("identify")}
-              className={`nav-tab relative cursor-pointer text-[#2e7d32] flex items-center gap-2 ${
-                active === "identify" ? "active" : ""
-              }`}
-            >
-              <MdOutlineImageSearch size={20} />
-              Identify Plants
-            </Link>
-            <Link
-              to="/"
-              onClick={() => setActive("history")}
-              className={`nav-tab relative cursor-pointer text-[#2e7d32] flex items-center gap-2 ${
-                active === "history" ? "active" : ""
+                location.pathname === "/history" ? "active" : ""
               }`}
             >
               <MdHistory size={20} />
               History
+            </Link>
+            <Link
+              to="/"
+              className={`nav-tab relative cursor-pointer text-[#2e7d32] flex items-center gap-2 ${
+                location.pathname === "/profile" ? "active" : ""
+              }`}
+            >
+              <CgProfile size={20} />
+              Profile
             </Link>
             <button
               className="flex items-center gap-2"
