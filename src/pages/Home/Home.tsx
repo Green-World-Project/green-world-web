@@ -2,7 +2,7 @@ import LoginForm from "../../shared/LoginForm";
 import FAQ from "./components/FAQ";
 import Features from "./components/Features";
 import Hero from "./components/Hero";
-import UploadPlant from "./components/UploadPlant";
+import IdentifyRedirect from "./components/IdentifyRedirect";
 
 export default function Home() {
   return (
@@ -10,7 +10,7 @@ export default function Home() {
       <LoginForm />
       <Hero />
       <Features />
-      <UploadPlant />
+      <IdentifyRedirect />
       <FAQ />
     </>
   );
