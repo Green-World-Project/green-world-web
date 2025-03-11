@@ -42,6 +42,16 @@ const StoreContextProvider = ({ children }: { children: ReactNode }) => {
     setToken(newToken);
   };
 
+  // Function to validate user token
+  // const isLoggedIn = token ? (() => {
+  //   try {
+  //     const decoded = jwtDecode<{ exp: number }>(token);
+  //     return decoded.exp * 1000 > Date.now();  // Check if token is expired
+  //   } catch (error) {
+  //     return false;
+  //   }
+  // })() : false;
+
   // Function to log out user
   const logout = () => {
     removeCookie("token", { path: "/" });
