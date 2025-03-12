@@ -3,6 +3,7 @@ import { motion, useInView } from "framer-motion";
 import axios from "axios";
 import { identify } from "../../../constants/END_POINTS";
 import { StoreContext } from "../../../context/StoreContext";
+import { IoClose } from "react-icons/io5";
 
 export default function UploadPlant() {
   const containerRef = useRef(null);
@@ -16,12 +17,19 @@ export default function UploadPlant() {
 
   // const [images, setImages] = useState<string[]>([]);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Trigger file input when the upload button is clicked
   const handleButtonClick = () => {
     fileInputRef.current?.click();
+  };
+
+  // Handle removal of the selected file
+  const handleRemoveImage = () => {
+    setSelectedFile(null);
+    setPreviewImage(null);
   };
 
   // Handle file selection or drop event
@@ -68,6 +76,8 @@ export default function UploadPlant() {
     const file = e.target.files?.[0];
     if (file) {
       setSelectedFile(file);
+      const newImageURL = URL.createObjectURL(file);
+      setPreviewImage(newImageURL);
     }
   };
 
@@ -79,6 +89,8 @@ export default function UploadPlant() {
     const droppedFiles = e.dataTransfer.files;
     if (droppedFiles && droppedFiles.length > 0) {
       setSelectedFile(droppedFiles[0]);
+      const newImageURL = URL.createObjectURL(droppedFiles[0]);
+      setPreviewImage(newImageURL);
     }
   };
 
@@ -89,7 +101,7 @@ export default function UploadPlant() {
 
   return (
     <motion.div
-      className="upload-container w-8/12 max-w-[1500px] mx-auto bg-white z-20 text-center px-5 py-10 rounded-lg shadow-2xl max-lg:w-5/6 max-md:w-full"
+      className="upload-container w-8/12 max-w-[1500px] mx-auto bg-white z-20 text-center p-10 rounded-lg shadow-2xl max-lg:w-5/6 max-md:w-full"
       initial="hidden"
       animate={isInView ? "visible" : "hidden"}
       variants={fadeUp}
@@ -98,31 +110,53 @@ export default function UploadPlant() {
       <h2 className="text-black text-[2.5rem] font-semibold mb-2 max-[340px]:text-4xl">
         Plant Identification
       </h2>
+
       <div
         ref={containerRef}
-        className="upload-area border-[2px] border-dashed rounded-lg py-10 px-5 cursor-pointer
-           transition-all hover:border-[#4CAF50] hover:bg-[#f9f9f9]"
+        className={`upload-area border-[2px] border-dashed rounded-lg py-10 px-5
+transition-colors hover:border-[#4CAF50] hover:bg-[#f9f9f9] ${
+          previewImage && "flex items-center justify-center py-5"
+        }`}
         onDrop={handleDrop}
         onDragOver={handleDragOver}
       >
-        <input
-          ref={fileInputRef}
-          className="hidden"
-          type="file"
-          accept="image/*"
-          onChange={handleFileChange}
-        />
-        <p className="text-lg text-gray-700 mb-2">
-          Drag and drop your plant photo here
-        </p>
-        <p className="text-lg text-gray-700 mb-4">or</p>
-        <button
-          className="select-button text-base bg-[#4CAF50] text-white px-5 py-2 rounded-md shadow-md transition-all hover:bg-[#45a049] focus:outline-none"
-          onClick={handleButtonClick}
-        >
-          Choose Image
-        </button>
+        {!previewImage ? (
+          <>
+            <input
+              ref={fileInputRef}
+              className="hidden"
+              type="file"
+              accept="image/*"
+              onChange={handleFileChange}
+            />
+            <p className="text-lg text-gray-700 mb-2">
+              Drag and drop your plant photo here
+            </p>
+            <p className="text-lg text-gray-700 mb-4">or</p>
+            <button
+              className="select-button text-base bg-[#4CAF50] text-white px-5 py-2 rounded-md shadow-md transition-all hover:bg-[#45a049] focus:outline-none"
+              onClick={handleButtonClick}
+            >
+              Choose Image
+            </button>
+          </>
+        ) : (
+          <div className="relative w-64 h-64 ">
+            <img
+              src={previewImage}
+              alt="Preview"
+              className="w-full h-full object-cover rounded-md shadow-md"
+            />
+            <button
+              onClick={handleRemoveImage}
+              className="absolute -top-2 -right-2 bg-red-600 rounded-full p-1 shadow-lg hover:bg-red-700 transition-colors"
+            >
+              <IoClose size={20} className="text-white" />
+            </button>
+          </div>
+        )}
       </div>
+
       <div className="flex justify-end mt-5">
         <button
           onClick={handleUpload}
