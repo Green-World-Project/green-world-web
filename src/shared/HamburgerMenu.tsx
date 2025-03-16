@@ -22,7 +22,7 @@ export const HamburgerButton = ({
 
   return (
     <button
-      className="lg:hidden flex items-center cursor-pointer sm:hidden"
+      className="flex items-center cursor-pointer min-[941px]:hidden "
       onClick={toggleMenu}
     >
       <div className="space-y-[5px]">
@@ -52,7 +52,7 @@ const HamburgerMenu = ({ isOpen }: HamburgerMenuProps) => {
   const { token, setIsPopUpOpen, logout } = useContext(StoreContext);
   return (
     <motion.div
-      className="overflow-hidden bg-white  flex flex-col items-center min-[780px]:hidden"
+      className="overflow-hidden bg-white  flex flex-col items-center min-[941px]:hidden"
       initial={{ height: 0 }}
       animate={{ height: isOpen ? "auto" : 0 }}
     >

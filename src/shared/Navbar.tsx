@@ -38,7 +38,7 @@ export default function Navbar() {
               </span>
             </Link>
           </div>
-          <div className="flex items-center gap-5 max-[780px]:hidden">
+          <div className="flex items-center gap-5 max-[940px]:hidden">
             <Link
               to="/"
               className={`nav-tab relative cursor-pointer text-[#2e7d32] flex gap-2 ${
@@ -83,7 +83,7 @@ export default function Navbar() {
               <button
                 onClick={() => setIsPopUpOpen(true)}
                 className="text-center text-[1rem] cursor-pointer font-medium text-[#43a047] px-4 py-2 border-[2px] 
- border-[#43a047] rounded-full transition-all hover:bg-[#43a0471a] hover:scale-105 max-sm:hidden"
+ border-[#43a047] rounded-full transition-all hover:bg-[#43a0471a] hover:scale-105 max-[940px]:hidden"
               >
                 Login
               </button>
@@ -92,7 +92,7 @@ export default function Navbar() {
               <button
                 onClick={() => navigate("signup")}
                 className="text-center text-[1rem] cursor-pointer font-medium text-white border-[2px] border-[#43a047] bg-[#43a047] px-4 py-2
-      rounded-full transition-all hover:bg-[#2e7d32] hover:scale-105 hover:border-[#2e7d32] max-sm:hidden"
+      rounded-full transition-all hover:bg-[#2e7d32] hover:scale-105 hover:border-[#2e7d32] max-[940px]:hidden"
               >
                 Sign Up
               </button>
@@ -112,7 +112,7 @@ export default function Navbar() {
             animate={{ height: "auto" }}
             exit={{ height: 0 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="nav-bottom flex items-center justify-start px-[2.5rem] lg:px-[4rem] max-w-[2130px] max-[780px]:hidden mx-auto w-full overflow-hidden"
+            className="nav-bottom flex items-center justify-start px-[2.5rem] lg:px-[4rem] max-w-[2130px] max-[940px]:hidden mx-auto w-full overflow-hidden"
           >
             <motion.div
               initial={{ opacity: 0 }}
