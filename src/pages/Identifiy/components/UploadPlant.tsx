@@ -4,6 +4,9 @@ import axios from "axios";
 import { identify } from "../../../constants/END_POINTS";
 import { StoreContext } from "../../../context/StoreContext";
 import { IoClose } from "react-icons/io5";
+import IdentifiedPlantCard from "../../../shared/IdentifiedPlantCard";
+import { PlantResult } from "../../../interfaces/interfaces";
+import { toast } from "react-toastify";
 
 export default function UploadPlant() {
   const containerRef = useRef(null);
@@ -18,6 +21,7 @@ export default function UploadPlant() {
   // const [images, setImages] = useState<string[]>([]);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const [plantResult, setPlantResult] = useState<PlantResult | null>(null);
   const [loading, setLoading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -30,6 +34,7 @@ export default function UploadPlant() {
   const handleRemoveImage = () => {
     setSelectedFile(null);
     setPreviewImage(null);
+    setPlantResult(null);
   };
 
   // Handle file selection or drop event
@@ -61,11 +66,12 @@ export default function UploadPlant() {
           Authorization: `Bearer ${token}`, // Add Bearer token to headers
         },
       });
-      console.log("Upload success:", response.data);
-      alert("Image uploaded successfully!");
+
+      setPlantResult(response.data);
+      toast.success("Image uploaded successfully!");
     } catch (error) {
       console.error("Upload error:", error);
-      alert("Failed to upload image.");
+      toast.error("Failed to upload image.");
     } finally {
       setLoading(false);
     }
@@ -140,8 +146,14 @@ transition-colors hover:border-[#4CAF50] hover:bg-[#f9f9f9] ${
               Choose Image
             </button>
           </>
+        ) : plantResult ? (
+          <IdentifiedPlantCard
+            handleRemoveImage={handleRemoveImage}
+            image={previewImage}
+            plantResult={plantResult}
+          />
         ) : (
-          <div className="relative w-64 h-64 ">
+          <div className="relative w-64 h-64">
             <img
               src={previewImage}
               alt="Preview"
@@ -160,14 +172,19 @@ transition-colors hover:border-[#4CAF50] hover:bg-[#f9f9f9] ${
       <div className="flex justify-end mt-5">
         <button
           onClick={handleUpload}
-          disabled={!selectedFile || loading}
-          className={`upload-button text-base bg-[#4CAF50] text-white px-5 py-2 rounded-md shadow-md transition-all hover:bg-[#45a049] focus:outline-none ${
-            loading ? "bg-gray-400" : "bg-green-500 hover:bg-green-600"
-          }`}
+          disabled={!selectedFile || !!plantResult || loading}
+          className={`upload-button text-base text-white px-5 py-2 rounded-md shadow-md transition-all focus:outline-none 
+    ${
+      loading || !selectedFile || plantResult
+        ? "bg-gray-400 cursor-not-allowed"
+        : "bg-green-500 hover:bg-green-600"
+    }
+  `}
         >
           {loading ? "Uploading..." : "Identify Image"}
         </button>
       </div>
+
       {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-5">
           {images.map((img, index) => (
             <div
