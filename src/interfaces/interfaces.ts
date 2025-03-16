@@ -36,6 +36,18 @@ export interface userDataTypes {
   gender: string;
 }
 
+export interface PlantResult {
+  name: string;
+  condition: string;
+}
+
+export interface IdentifiedPlantCardProps {
+  plantResult?: PlantResult | null;
+  image?: string;
+  handleRemoveImage?: () => void;
+  showRemoveButton?: boolean;
+}
+
 export interface pcsDataTypes {
   plantName: string;
   wateringTime: number;
