@@ -11,7 +11,7 @@ import { authUrls } from "../../constants/END_POINTS";
 import { AxiosError } from "axios";
 import { toast } from "react-toastify";
 
-const SignUpForm = () => {
+const SignUpPage = () => {
   const navigate = useNavigate();
   const { setIsPopUpOpen, login } = useContext(StoreContext);
   const [passwordShown, setPasswordShown] = useState(false);
@@ -242,4 +242,4 @@ const SignUpForm = () => {
   );
 };
 
-export default SignUpForm;
+export default SignUpPage;
