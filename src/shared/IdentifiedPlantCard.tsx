@@ -6,8 +6,8 @@ const IdentifiedPlantCard = ({
   image,
   handleRemoveImage,
   showRemoveButton = true,
-  maxWidth = "max-w-64",
-  height = "h-64",
+  maxWidth,
+  height,
 }: IdentifiedPlantCardProps) => {
   return (
     <div
