@@ -221,7 +221,7 @@ const SignUpPage = () => {
           </div>
 
           <button
-            className="w-full py-[10px] sm mt-4 bg-green-500 hover:bg-green-600 text-white text-lg font-medium rounded-md shadow-md transition-all duration-200 ease-in-out mt-5"
+            className="w-full py-[10px] sm bg-green-500 hover:bg-green-600 text-white text-lg font-medium rounded-md shadow-md transition-all duration-200 ease-in-out mt-5"
             type="submit"
           >
             Sign up
