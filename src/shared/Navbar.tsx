@@ -10,12 +10,14 @@ import { FaUsers } from "react-icons/fa";
 import { AnimatePresence, motion } from "framer-motion";
 import { CgProfile } from "react-icons/cg";
 import { MdHistory, MdOutlineImageSearch } from "react-icons/md";
+import { useLogin } from "../hooks/useLogin";
 
 export default function Navbar() {
-  const { token, setIsPopUpOpen, logout } = useContext(StoreContext);
+  const { token, logout } = useContext(StoreContext);
   const navigate = useNavigate();
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
+  const handleLoginClick = useLogin();
 
   useEffect(() => {
     if (token) {
@@ -81,7 +83,7 @@ export default function Navbar() {
               <UserAvatar isOpen={isOpen} setIsOpen={setIsOpen} />
             ) : (
               <button
-                onClick={() => setIsPopUpOpen(true)}
+                onClick={handleLoginClick}
                 className="text-center text-[1rem] cursor-pointer font-medium text-[#43a047] px-4 py-2 border-[2px] 
  border-[#43a047] rounded-full transition-all hover:bg-[#43a0471a] hover:scale-105 max-[940px]:hidden"
               >
