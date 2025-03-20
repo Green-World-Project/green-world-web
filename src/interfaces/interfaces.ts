@@ -46,6 +46,8 @@ export interface IdentifiedPlantCardProps {
   image?: string;
   handleRemoveImage?: () => void;
   showRemoveButton?: boolean;
+  maxWidth: string;
+  height: string;
 }
 
 export interface pcsDataTypes {
