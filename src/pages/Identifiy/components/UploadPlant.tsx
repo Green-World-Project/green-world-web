@@ -68,10 +68,15 @@ export default function UploadPlant() {
       });
 
       setPlantResult(response.data);
-      toast.success("Image uploaded successfully!");
+      toast.success("Plant identification added to history!");
     } catch (error) {
-      console.error("Upload error:", error);
-      toast.error("Failed to upload image.");
+      if (axios.isAxiosError(error)) {
+        toast.error(
+          error.response?.data?.error || "An unexpected error occurred"
+        );
+      } else {
+        toast.error("An unexpected error occurred");
+      }
     } finally {
       setLoading(false);
     }
@@ -151,9 +156,11 @@ transition-colors hover:border-[#4CAF50] hover:bg-[#f9f9f9] ${
             handleRemoveImage={handleRemoveImage}
             image={previewImage}
             plantResult={plantResult}
+            maxWidth="max-w-64"
+            height="h-64"
           />
         ) : (
-          <div className="relative w-64 h-64">
+          <div className="relative w-64 h-64 shadow-lg">
             <img
               src={previewImage}
               alt="Preview"
