@@ -5,10 +5,10 @@ import {
 } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import MasterLayout from "./layouts/MasterLayout";
-import SignUpForm from "./pages/AuthPages/SignUpForm";
 import { ToastContainer } from "react-toastify";
 import PlantCare from "./pages/PlantCare/PlantCare";
 import Identify from "./pages/Identifiy/Identify";
+import SignUpPage from "./pages/AuthPages/SignUpPage";
 
 const routes = createBrowserRouter([
   {
@@ -36,11 +36,11 @@ const routes = createBrowserRouter([
   },
   {
     path: "/",
-    element: <SignUpForm />,
+    element: <SignUpPage />,
     children: [
       {
         path: "/signup",
-        element: <SignUpForm />,
+        element: <SignUpPage />,
       },
     ],
   },
