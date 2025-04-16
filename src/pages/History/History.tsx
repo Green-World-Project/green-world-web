@@ -7,6 +7,7 @@ import { Plant } from "../../interfaces/interfaces";
 import { toast } from "react-toastify";
 import LoadingSpinner from "../../shared/LoadingSpinner";
 import ConfirmationModal from "../../shared/ConfirmationModal";
+import { motion } from "framer-motion";
 
 export default function History() {
   const [plants, setPlants] = useState([]);
@@ -27,8 +28,9 @@ export default function History() {
         });
         setPlants(res.data);
       } catch (error) {
-        toast.error("Error fetching plants");
-        console.error("Error fetching plants", error);
+        toast.error(
+          error instanceof Error ? error.message : "Something went wrong"
+        );
       } finally {
         setLoading(false);
       }
@@ -68,21 +70,39 @@ export default function History() {
       {loading ? (
         <LoadingSpinner />
       ) : (
-        <div
-          className="grid justify-items-center
-          gap-x-6 gap-y-10 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+        <motion.div
+          className="grid justify-items-center gap-x-6 gap-y-10 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+          initial="hidden"
+          animate="visible"
+          variants={{
+            hidden: {},
+            visible: {
+              transition: {
+                staggerChildren: 0.2,
+              },
+            },
+          }}
         >
           {plants.map((plant: Plant) => (
-            <IdentifiedPlantCard
+            <motion.div
               key={plant._id}
-              plant={plant}
-              setSelectedPlantId={setSelectedPlantId}
-              setIsModalOpen={setIsModalOpen}
-              iconSize={24}
-              height=" h-96"
-            />
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0 },
+              }}
+              transition={{ duration: 0.4 }}
+              className="w-full"
+            >
+              <IdentifiedPlantCard
+                plant={plant}
+                setSelectedPlantId={setSelectedPlantId}
+                setIsModalOpen={setIsModalOpen}
+                iconSize={24}
+                height=" h-96"
+              />
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       )}
       <ConfirmationModal
         onConfirm={handleRemovePlant}
