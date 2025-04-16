@@ -53,6 +53,11 @@ const HamburgerMenu = ({ isOpen }: HamburgerMenuProps) => {
   const { token, logout } = useContext(StoreContext);
   const handleLoginClick = useLogin();
 
+  const handleLogout = () => {
+    logout(); // clears token/cookies
+    navigate("/"); // navigate to home route
+  };
+
   return (
     <motion.div
       className="overflow-hidden bg-white  flex flex-col items-center min-[941px]:hidden"
@@ -99,7 +104,7 @@ const HamburgerMenu = ({ isOpen }: HamburgerMenuProps) => {
         {token && (
           <>
             <Link
-              to="/"
+              to="/history"
               className={`nav-tab relative cursor-pointer text-[#2e7d32] flex items-center gap-2 ${
                 location.pathname === "/history" ? "active" : ""
               }`}
@@ -116,10 +121,7 @@ const HamburgerMenu = ({ isOpen }: HamburgerMenuProps) => {
               <CgProfile size={20} />
               Profile
             </Link>
-            <button
-              className="flex items-center gap-2"
-              onClick={() => logout()}
-            >
+            <button className="flex items-center gap-2" onClick={handleLogout}>
               <RiLogoutBoxRLine size={20} fill="#2e7d32" />
               <span className="text-[#2e7d32]">Logout</span>
             </button>

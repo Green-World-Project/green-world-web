@@ -19,6 +19,11 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const handleLoginClick = useLogin();
 
+  const handleLogout = () => {
+    logout(); // clears token/cookies
+    navigate("/"); // navigate to home route
+  };
+
   useEffect(() => {
     if (token) {
       // Reset to closed state when token changes
@@ -134,7 +139,7 @@ export default function Navbar() {
               </Link>
 
               <Link
-                to="/"
+                to="/history"
                 className={`nav-tab relative cursor-pointer text-[#2e7d32] flex items-center gap-2 ${
                   location.pathname === "/history" ? "active" : ""
                 }`}
@@ -144,7 +149,7 @@ export default function Navbar() {
               </Link>
               <button
                 className="flex items-center gap-2"
-                onClick={() => logout()}
+                onClick={handleLogout}
               >
                 <RiLogoutBoxRLine size={20} fill="#2e7d32" />
                 <span className="text-[#2e7d32]">Logout</span>
