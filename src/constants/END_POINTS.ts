@@ -8,6 +8,10 @@ export const authUrls = {
 
 export const identify = `${baseUrl}/user/plant-identification`;
 
+export const history = {
+  get: `${baseUrl}/user/history`,
+};
+
 export const pcs = {
   create: `${baseUrl}/user/pcs`,
   get: `${baseUrl}/user/pcs`,

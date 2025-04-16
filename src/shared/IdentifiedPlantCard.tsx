@@ -5,61 +5,69 @@ const IdentifiedPlantCard = ({
   plantResult,
   image,
   handleRemoveImage,
-  showRemoveButton = true,
   maxWidth,
   height,
+  plant,
+  iconSize,
+  setIsModalOpen,
+  setSelectedPlantId,
 }: IdentifiedPlantCardProps) => {
+  const handleOpenModal = () => {
+    if (!plant) return;
+    setSelectedPlantId?.(plant._id);
+    setIsModalOpen?.(true);
+  };
+
   return (
     <div
-      className={`${
-        showRemoveButton && "relative"
-      } w-full pb-2  ${maxWidth}  ${height}  shadow-lg rounded-md border border-gray-200 bg-white max-sm:h-auto`}
+      className={`${"relative"} w-full pb-2 ${maxWidth}  ${height}  shadow-lg max-[400px]min-h-96 rounded-md border border-gray-200 bg-white`}
     >
       <div className="w-full h-[75%] rounded-t-md">
         <img
           className="object-cover rounded-t-md w-full h-full "
-          src={image}
-          alt="image"
+          src={image || plant?.photo}
+          alt="plant image"
         />
       </div>
       <div className="px-3 pt-3">
         <p className="text-left font-bold">
-          {plantResult?.name || "Unknown Plant"}
+          {plantResult?.name || plant?.info.name || "Unknown Plant"}
         </p>
         <div className="flex items-center justify-between flex-wrap gap-x-2">
           <h3
             className={`font-bold ${
-              plantResult?.condition === "healthy"
+              plantResult?.condition === "healthy" ||
+              plant?.info.condition === "healthy"
                 ? "text-green-600"
                 : "text-red-600"
             } `}
           >
-            {plantResult?.condition || "No Condition Data"}
+            {plantResult?.condition ||
+              plant?.info.condition ||
+              "No Condition Data"}
           </h3>
           <button className="font-bold">Plant Care</button>
         </div>
-        {/* <p className="text-left mt-1 text-gray-500 text-sm font-medium">
-          {plantResult.date
-            ? new Date(plantResult.date).toLocaleString("en-US", {
-                month: "long",
-                day: "2-digit",
-                year: "numeric",
-                hour: "2-digit",
-                minute: "2-digit",
-                second: "2-digit",
-                hour12: true,
-              })
-            : "No Date Available"}
-        </p> */}
+        <p className="text-left mt-1 text-gray-500 text-sm font-medium">
+          {plant?.createAt &&
+            new Date(plant.createAt).toLocaleString("en-US", {
+              month: "long",
+              day: "2-digit",
+              year: "numeric",
+              hour: "2-digit",
+              minute: "2-digit",
+              second: "2-digit",
+              hour12: true,
+            })}
+        </p>
       </div>
-      {showRemoveButton && (
-        <button
-          onClick={handleRemoveImage}
-          className="absolute -top-2 -right-2 bg-red-600 rounded-full p-1 shadow-lg hover:bg-red-700 transition-colors"
-        >
-          <IoClose size={20} className="text-white" />
-        </button>
-      )}
+
+      <button
+        onClick={handleRemoveImage || handleOpenModal}
+        className="absolute -top-2 -right-2 bg-red-600 rounded-full p-1 shadow-lg hover:bg-red-700 transition-colors"
+      >
+        <IoClose size={iconSize || 20} className="text-white" />
+      </button>
     </div>
   );
 };
