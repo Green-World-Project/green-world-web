@@ -44,7 +44,7 @@ body {
 
 @layer utilities {
   .container-custom {
-    @apply max-w-[2000px] mx-auto pt-[120px] max-md:pt-10;
+    @apply max-w-[2000px] mx-auto pt-[120px] pb-10;
   }
 }
 
