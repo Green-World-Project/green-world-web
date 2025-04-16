@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from "react";
+
 export interface HamburgerButtonProps {
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -36,18 +38,29 @@ export interface userDataTypes {
   gender: string;
 }
 
-export interface PlantResult {
+export interface PlantInfo {
   name: string;
   condition: string;
 }
 
+export interface Plant {
+  _id: string;
+  photo: string;
+  info: PlantInfo;
+  createAt: string;
+}
+
 export interface IdentifiedPlantCardProps {
-  plantResult?: PlantResult | null;
+  plantResult?: PlantInfo | null;
   image?: string;
   handleRemoveImage?: () => void;
-  showRemoveButton?: boolean;
-  maxWidth: string;
+  setSelectedPlantId?: (id: string) => void;
+  setIsModalOpen?: Dispatch<SetStateAction<boolean>>;
+  isModalOpen?: boolean;
+  maxWidth?: string;
   height: string;
+  plant?: Plant;
+  iconSize?: number;
 }
 
 export interface pcsDataTypes {
