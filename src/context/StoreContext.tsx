@@ -1,5 +1,11 @@
 import { jwtDecode } from "jwt-decode";
-import { createContext, useState, ReactNode, useEffect } from "react";
+import {
+  createContext,
+  useState,
+  ReactNode,
+  useEffect,
+  useCallback,
+} from "react";
 import { useCookies } from "react-cookie";
 import { userDataTypes } from "../interfaces/interfaces";
 import axios from "axios";
@@ -53,10 +59,10 @@ const StoreContextProvider = ({ children }: { children: ReactNode }) => {
   // })() : false;
 
   // Function to log out user
-  const logout = () => {
+  const logout = useCallback(() => {
     removeCookie("token", { path: "/" });
     setToken(null);
-  };
+  }, [removeCookie, setToken]);
 
   // Function to get user data
   const getUserData = async () => {
@@ -97,7 +103,7 @@ const StoreContextProvider = ({ children }: { children: ReactNode }) => {
       console.error("Invalid token:", error);
       logout(); // Invalid token → Logout
     }
-  }, [token]); // Runs when `token` changes
+  }, [token, logout]); // Runs when `token` changes
 
   const contextValue: StoreContextTypes = {
     isPopUpOpen,
