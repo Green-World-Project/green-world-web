@@ -5,7 +5,7 @@ import { identify } from "../../../constants/END_POINTS";
 import { StoreContext } from "../../../context/StoreContext";
 import { IoClose } from "react-icons/io5";
 import IdentifiedPlantCard from "../../../shared/IdentifiedPlantCard";
-import { PlantResult } from "../../../interfaces/interfaces";
+import { PlantInfo } from "../../../interfaces/interfaces";
 import { toast } from "react-toastify";
 
 export default function UploadPlant() {
@@ -21,7 +21,7 @@ export default function UploadPlant() {
   // const [images, setImages] = useState<string[]>([]);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
-  const [plantResult, setPlantResult] = useState<PlantResult | null>(null);
+  const [plantResult, setPlantResult] = useState<PlantInfo | null>(null);
   const [loading, setLoading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -157,7 +157,7 @@ transition-colors hover:border-[#4CAF50] hover:bg-[#f9f9f9] ${
             image={previewImage}
             plantResult={plantResult}
             maxWidth="max-w-64"
-            height="h-64"
+            height="max-sm:h-auto h-64"
           />
         ) : (
           <div className="relative w-64 h-64 shadow-lg">
