@@ -9,6 +9,9 @@ import { ToastContainer } from "react-toastify";
 import PlantCare from "./pages/PlantCare/PlantCare";
 import Identify from "./pages/Identifiy/Identify";
 import SignUpPage from "./pages/AuthPages/SignUpPage";
+import History from "./pages/History/History";
+import ProtectedRoute from "./shared/ProtectedRoute";
+import NotFound from "./shared/NotFound";
 
 const routes = createBrowserRouter([
   {
@@ -23,6 +26,14 @@ const routes = createBrowserRouter([
       {
         path: "/identify",
         element: <Identify />,
+      },
+      {
+        path: "/history",
+        element: (
+          <ProtectedRoute>
+            <History />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/plantcare",
@@ -43,6 +54,10 @@ const routes = createBrowserRouter([
         element: <SignUpPage />,
       },
     ],
+  },
+  {
+    path: "*", // Catch-all for unknown routes
+    element: <NotFound />,
   },
 ]);
 
