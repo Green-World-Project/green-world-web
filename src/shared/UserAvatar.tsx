@@ -1,12 +1,10 @@
 import { useContext, useEffect } from "react";
 import { StoreContext } from "../context/StoreContext";
 import { HamburgerButtonProps } from "../interfaces/interfaces";
+import { getInitial } from "../constants/UTILS";
 
 const UserAvatar = ({ isOpen, setIsOpen }: HamburgerButtonProps) => {
   const { token, getUserData, userData } = useContext(StoreContext);
-
-  const getInitial = (name: string | undefined) =>
-    name && name.length > 0 ? name.charAt(0).toUpperCase() : "";
 
   useEffect(() => {
     getUserData();
