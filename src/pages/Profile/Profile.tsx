@@ -31,7 +31,7 @@ export default function Profile() {
 
   const onSubmit = async (data: userDataTypes) => {
     try {
-      if (!userData) return;
+      if (!userData && !token) return;
       await axios.put(authUrls.editUser, data, {
         headers: {
           Authorization: `Bearer ${token}`,
