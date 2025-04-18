@@ -129,7 +129,7 @@ export default function Navbar() {
               className="py-[1rem] flex gap-5"
             >
               <Link
-                to="/"
+                to="/profile"
                 className={`nav-tab relative cursor-pointer text-[#2e7d32] flex items-center gap-2 ${
                   location.pathname === "/profile" ? "active" : ""
                 }`}

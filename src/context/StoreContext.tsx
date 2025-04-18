@@ -14,6 +14,7 @@ import { authUrls } from "../constants/END_POINTS";
 interface StoreContextTypes {
   isPopUpOpen: boolean;
   setIsPopUpOpen: (isOpen: boolean) => void;
+  setUserData: (data: userDataTypes) => void;
   token: string | null;
   userData: userDataTypes | null;
   login: (token: string) => void;
@@ -29,6 +30,7 @@ export const StoreContext = createContext<StoreContextTypes>({
   login: () => {},
   logout: () => {},
   getUserData: () => {},
+  setUserData: () => {},
 });
 
 const StoreContextProvider = ({ children }: { children: ReactNode }) => {
@@ -112,6 +114,7 @@ const StoreContextProvider = ({ children }: { children: ReactNode }) => {
     login,
     logout,
     getUserData,
+    setUserData,
     userData,
   };
 

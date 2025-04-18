@@ -12,6 +12,7 @@ import SignUpPage from "./pages/AuthPages/SignUpPage";
 import History from "./pages/History/History";
 import ProtectedRoute from "./shared/ProtectedRoute";
 import NotFound from "./shared/NotFound";
+import Profile from "./pages/Profile/Profile";
 
 const routes = createBrowserRouter([
   {
@@ -28,6 +29,14 @@ const routes = createBrowserRouter([
         element: <Identify />,
       },
       {
+        path: "/profile",
+        element: (
+          <ProtectedRoute>
+            <Profile />
+          </ProtectedRoute>
+        ),
+      },
+      {
         path: "/history",
         element: (
           <ProtectedRoute>
@@ -35,6 +44,7 @@ const routes = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
+
       {
         path: "/plantcare",
         element: <PlantCare />,
