@@ -6,6 +6,7 @@ import { StoreContext } from "../../../context/StoreContext";
 import { IoClose } from "react-icons/io5";
 import IdentifiedPlantCard from "../../../shared/IdentifiedPlantCard";
 import { PlantInfo } from "../../../interfaces/interfaces";
+import { FiCamera } from "react-icons/fi";
 import { toast } from "react-toastify";
 
 export default function UploadPlant() {
@@ -24,6 +25,7 @@ export default function UploadPlant() {
   const [plantResult, setPlantResult] = useState<PlantInfo | null>(null);
   const [loading, setLoading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const cameraInputRef = useRef<HTMLInputElement>(null); // for camera
 
   // Trigger file input when the upload button is clicked
   const handleButtonClick = () => {
@@ -140,16 +142,39 @@ transition-colors hover:border-[#4CAF50] hover:bg-[#f9f9f9] ${
               accept="image/*"
               onChange={handleFileChange}
             />
-            <p className="text-lg text-gray-700 mb-2">
+            <input
+              ref={cameraInputRef}
+              className="hidden"
+              type="file"
+              accept="image/*"
+              capture="environment"
+              onChange={handleFileChange}
+            />
+            <p className="hidden min-[980px]:block text-lg text-gray-700 mb-2">
               Drag and drop your plant photo here
             </p>
-            <p className="text-lg text-gray-700 mb-4">or</p>
-            <button
-              className="select-button text-base bg-[#4CAF50] text-white px-5 py-2 rounded-md shadow-md transition-all hover:bg-[#45a049] focus:outline-none"
-              onClick={handleButtonClick}
-            >
-              Choose Image
-            </button>
+            <p className="hidden min-[980px]:block text-lg text-gray-700 mb-4">
+              or
+            </p>
+            <div className="flex flex-row flex-wrap gap-5 justify-center items-center">
+              <button
+                className="text-base bg-[#4CAF50] text-white px-5 py-2 rounded-md shadow-md transition-all hover:bg-[#45a049] focus:outline-none 
+                 min-[980px]:hidden"
+                onClick={() => cameraInputRef.current?.click()}
+              >
+                <FiCamera size={24} />
+              </button>
+
+              <span className="min-[980px]:hidden text-lg text-gray-700">
+                or
+              </span>
+              <button
+                className="text-base bg-[#4CAF50] text-white px-5 py-2 rounded-md shadow-md transition-all hover:bg-[#45a049] focus:outline-none"
+                onClick={handleButtonClick}
+              >
+                Choose Image
+              </button>
+            </div>
           </>
         ) : plantResult ? (
           <IdentifiedPlantCard
