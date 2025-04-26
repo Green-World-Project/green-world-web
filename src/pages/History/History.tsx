@@ -28,6 +28,7 @@ export default function History() {
         });
         setPlants(res.data);
       } catch (error) {
+        console.error(error);
         toast.error(
           error instanceof Error ? error.message : "Something went wrong"
         );
@@ -38,19 +39,35 @@ export default function History() {
     fetchPlantHistory();
   }, [token]);
 
-  // const handleRemove = async (plantId: string) => {
-  //   try {
-  //     await axios.delete(`/api/plant-history/${plantId}`);
-  //     // Optimistically update local state
-  //     setPlants((prev) => prev.filter((plant) => plant.id !== plantId));
-  //   } catch (error) {
-  //     console.error("Failed to delete plant:", error);
-  //   }
-  // };
+  const handleRemovePlant = async () => {
+    if (!selectedPlantId) return;
+    try {
+      const response = await axios.delete(history.delete(selectedPlantId), {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-  const handleRemovePlant = () => {
-    console.log("deleted");
-    console.log(selectedPlantId);
+      toast.success(response.data, {
+        autoClose: 3000, // 3 seconds
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+
+      setPlants((prev) =>
+        prev.filter((plant: Plant) => plant._id !== selectedPlantId)
+      );
+    } catch (error) {
+      console.error(error);
+      toast.error(
+        error instanceof Error ? error.message : "Something went wrong"
+      );
+    }
+
     setIsModalOpen(false);
   };
 
@@ -71,7 +88,7 @@ export default function History() {
         <LoadingSpinner />
       ) : (
         <motion.div
-          className="grid justify-items-center gap-x-6 gap-y-10 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+          className="grid justify-items-center gap-x-6 gap-y-10 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mb-16"
           initial="hidden"
           animate="visible"
           variants={{
