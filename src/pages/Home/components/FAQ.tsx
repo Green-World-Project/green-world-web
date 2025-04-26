@@ -20,7 +20,7 @@ const FAQ = () => {
   };
 
   return (
-    <section className="bg-white px-[1rem] pb-[1.5rem]">
+    <section className="bg-white px-[1rem] pb-[1.5rem] mb-20">
       <h2 className="text-center text-black text-[2.5rem] font-semibold my-10">
         Frequently Asked Questions
       </h2>
