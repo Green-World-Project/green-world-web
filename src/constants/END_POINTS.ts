@@ -4,7 +4,7 @@ export const authUrls = {
   register: `${baseUrl}/register`,
   login: `${baseUrl}/login`,
   user: `${baseUrl}/user`,
-  editUser: `${baseUrl}/user/edit`,
+  editUser: `${baseUrl}/user/edit/info`,
 };
 
 export const identify = `${baseUrl}/user/plant-identification`;
