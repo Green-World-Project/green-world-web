@@ -1,5 +1,6 @@
 import { IoClose } from "react-icons/io5";
 import { IdentifiedPlantCardProps } from "../interfaces/interfaces";
+import { formatDate } from "../constants/UTILS";
 
 const IdentifiedPlantCard = ({
   plantResult,
@@ -49,16 +50,7 @@ const IdentifiedPlantCard = ({
           <button className="font-bold">Plant Care</button>
         </div>
         <p className="text-left mt-1 text-gray-500 text-sm font-medium">
-          {plant?.createAt &&
-            new Date(plant.createAt).toLocaleString("en-US", {
-              month: "long",
-              day: "2-digit",
-              year: "numeric",
-              hour: "2-digit",
-              minute: "2-digit",
-              second: "2-digit",
-              hour12: true,
-            })}
+          {plant?.createAt && formatDate(plant.createAt)}
         </p>
       </div>
 
