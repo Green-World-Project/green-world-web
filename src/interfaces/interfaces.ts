@@ -68,3 +68,23 @@ export interface pcsDataTypes {
   wateringTime: number;
   watering?: boolean;
 }
+
+export interface pcPlant {
+  _id: string;
+  plant_name: string;
+  waterNeed: number;
+  groundArea: number;
+  isWatered: boolean;
+  info: {
+    ideal_soil_moisture_percentage: number;
+    optimal_temperature_celsius: number;
+    light_exposure_hours: number;
+    optimal_soil_ph_level: number;
+    recommended_npk_ratio: string;
+    water_duration_days: number;
+    daily_water_requirement_liters_per_m2: number;
+    humidity_percentage: number;
+    plant_description: string;
+  };
+  createdAt: string;
+}
