@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import AddPlantForm from "../../shared/AddPlantForm";
 import PlantCareList from "./components/PlantCareList";
 
 export default function PlantCare() {
@@ -22,9 +21,8 @@ export default function PlantCare() {
         >
           Add Plant
         </button>
-        <AddPlantForm isFormOpen={isFormOpen} setIsFormOpen={setIsFormOpen} />
       </div>
-      <PlantCareList />
+      <PlantCareList isFormOpen={isFormOpen} setIsFormOpen={setIsFormOpen} />
     </div>
   );
 }
