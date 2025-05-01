@@ -24,6 +24,10 @@ export default function Navbar() {
     navigate("/"); // navigate to home route
   };
 
+  const handleCloseBottomNav = () => {
+    setIsOpen(false);
+  };
+
   useEffect(() => {
     if (token) {
       // Reset to closed state when token changes
@@ -47,6 +51,7 @@ export default function Navbar() {
           </div>
           <div className="flex items-center gap-5 max-[940px]:hidden">
             <Link
+              onClick={handleCloseBottomNav}
               to="/"
               className={`nav-tab relative cursor-pointer text-[#2e7d32] flex gap-2 ${
                 location.pathname === "/home" ? "active" : ""
@@ -56,6 +61,7 @@ export default function Navbar() {
               Home
             </Link>
             <Link
+              onClick={handleCloseBottomNav}
               to="/identify"
               className={`nav-tab relative cursor-pointer text-[#2e7d32] flex items-center gap-2 ${
                 location.pathname === "/identify" ? "active" : ""
@@ -65,6 +71,7 @@ export default function Navbar() {
               Identify
             </Link>
             <Link
+              onClick={handleCloseBottomNav}
               to="/plantcare"
               className={`nav-tab relative cursor-pointer text-[#2e7d32] flex items-center gap-2 ${
                 location.pathname === "/plantcare" ? "active" : ""
@@ -74,6 +81,7 @@ export default function Navbar() {
               Plant Care
             </Link>
             <Link
+              onClick={handleCloseBottomNav}
               to="/"
               className={`nav-tab relative cursor-pointer text-[#2e7d32] flex items-center gap-2 ${
                 location.pathname === "/about-us" ? "active" : ""
@@ -161,7 +169,10 @@ export default function Navbar() {
         )}
       </AnimatePresence>
 
-      <HamburgerMenu isOpen={isOpen} />
+      <HamburgerMenu
+        isOpen={isOpen}
+        handleCloseBottomNav={handleCloseBottomNav}
+      />
     </nav>
   );
 }
