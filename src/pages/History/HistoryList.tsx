@@ -18,8 +18,8 @@ function HistoryList() {
 
   useEffect(() => {
     const fetchPlantHistory = async () => {
+      if (!token || !userData) return;
       try {
-        if (!token || !userData) return;
         setLoading(true);
         const res = await axios.get(history.get, {
           headers: {
