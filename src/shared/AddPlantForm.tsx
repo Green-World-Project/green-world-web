@@ -1,33 +1,89 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { IoClose } from "react-icons/io5";
-import { useForm } from "react-hook-form";
-import { FormToggleProps, pcsDataTypes } from "../interfaces/interfaces";
-import axios, { AxiosError } from "axios";
+import { Controller, useForm } from "react-hook-form";
+import { FormToggleProps, plantOption } from "../interfaces/interfaces";
+import axios from "axios";
 import { pcs } from "../constants/END_POINTS";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { StoreContext } from "../context/StoreContext";
 import { toast } from "react-toastify";
+import PlantSelect from "../pages/PlantCare/components/PlantSelect";
 
-const AddPlantForm = ({ isFormOpen, setIsFormOpen }: FormToggleProps) => {
-  const { token } = useContext(StoreContext);
+const AddPlantForm = ({
+  onClose,
+  isFormOpen,
+  setIsFormOpen,
+}: FormToggleProps) => {
+  const { token, userData } = useContext(StoreContext);
+  const [plantsOptions, setplantsOptions] = useState<plantOption[]>([]);
+  // const [selectedPlant, setSelectedPlant] = useState<plantOption | null>(null);
+
+  interface FormValues {
+    plant: plantOption | null;
+    groundArea: number;
+    isWatered: boolean;
+  }
+
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
-  } = useForm<pcsDataTypes>();
+  } = useForm<FormValues>({
+    defaultValues: { plant: null, groundArea: 0.1, isWatered: false },
+  });
 
-  const onSubmit = async (data: pcsDataTypes) => {
+  useEffect(() => {
+    const fetchPlantOptions = async () => {
+      try {
+        if (!token || !userData) return;
+
+        const res = await axios.get(pcs.getPlantsOptions, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setplantsOptions(res.data);
+      } catch (error) {
+        console.error(error);
+        toast.error(
+          error instanceof Error ? error.message : "Something went wrong"
+        );
+      }
+    };
+
+    fetchPlantOptions();
+  }, [token, userData]);
+
+  const onSubmit = async (data: FormValues) => {
+    if (!token || !userData) return;
+    const payload = {
+      plantID: data.plant!._id,
+      groundArea: data.groundArea,
+      isWatered: data.isWatered,
+    };
+
     try {
-      const response = await axios.post(pcs.create, data, {
+      const response = await axios.post(pcs.create, payload, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      toast.success(response.data);
-      setIsFormOpen(false);
+      toast.success(response.data, {
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+      onClose();
     } catch (error) {
-      const axiosError = error as AxiosError<{ error: string }>;
-      toast.error(axiosError.response?.data?.error || "Something went wrong!");
+      console.error(error);
+      toast.error(
+        error instanceof Error ? error.message : "Something went wrong"
+      );
     }
   };
 
@@ -70,56 +126,68 @@ const AddPlantForm = ({ isFormOpen, setIsFormOpen }: FormToggleProps) => {
               onSubmit={handleSubmit(onSubmit)}
               className="flex flex-col gap-5 mt-8"
             >
-              <div className="flex flex-col gap-1 grow">
-                <label className="font-medium text-white" htmlFor="plantName">
-                  Plant Name
-                </label>
-                <input
-                  className="px-1 py-1 bg-[#E1F1F1] shadow-sm focus:shadow outline-none w-full focus:ring-2 
-                    focus:ring-[#2ecc71] transition duration-300 ease-in-out rounded-sm"
-                  type="text"
-                  id="plantName"
-                  {...register("plantName", {
-                    required: "Plant Name is required",
-                  })}
+              <div className="flex flex-col gap-1 grow relative z-50 overflow-visible">
+                <Controller
+                  name="plant"
+                  control={control}
+                  rules={{
+                    required: "Please select a plant",
+                  }}
+                  render={({ field: { onChange: rhfOnChange, value } }) => (
+                    <div>
+                      <label className="block mb-1 font-medium text-white">
+                        Plant Name
+                      </label>
+                      <PlantSelect
+                        options={plantsOptions}
+                        value={value}
+                        onChange={(plant) => {
+                          rhfOnChange(plant);
+                        }}
+                      />
+                    </div>
+                  )}
                 />
-                {errors.plantName && (
+
+                {errors.plant && (
                   <span className="text-red-500 text-sm">
-                    {errors.plantName.message}
+                    {errors.plant.message}
                   </span>
                 )}
               </div>
               <div className="flex flex-col gap-1 grow">
-                <label
-                  className="font-medium text-white"
-                  htmlFor="wateringTime"
-                >
-                  Watering Time (min)
+                <label className="font-medium text-white" htmlFor="groundArea">
+                  Ground Area (m²)
                 </label>
                 <input
                   className="px-1 py-1 bg-[#E1F1F1] shadow-sm focus:shadow outline-none w-full focus:ring-2 
                     focus:ring-[#2ecc71] transition duration-300 ease-in-out rounded-sm"
                   type="number"
-                  id="wateringTime"
-                  {...register("wateringTime", {
-                    required: "Watering Time is required",
+                  step="0.01"
+                  id="groundArea"
+                  {...register("groundArea", {
+                    required: "Ground Area is required",
+                    min: {
+                      value: 0.01,
+                      message: "Ground Area must be greater than 0",
+                    },
                   })}
                 />
-                {errors.wateringTime && (
+                {errors.groundArea && (
                   <span className="text-red-500 text-sm">
-                    {errors.wateringTime.message}
+                    {errors.groundArea.message}
                   </span>
                 )}
               </div>
               <div className="flex items-center gap-2">
-                <label htmlFor="watering" className="text-sm text-white">
+                <label htmlFor="watering" className=" text-white">
                   Watered
                 </label>
                 <input
                   id="watering"
                   type="checkbox"
-                  {...register("watering")}
-                  className="form-checkbox h-4 w-4 text-green-600 border-gray-300 rounded focus:ring-green-500"
+                  {...register("isWatered")}
+                  className="h-4 w-4 text-green-600 border-gray-300 rounded focus:ring-green-500"
                 />
               </div>
               <button
