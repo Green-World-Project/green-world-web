@@ -6,12 +6,14 @@ export interface HamburgerButtonProps {
 }
 
 export interface FormToggleProps {
+  onClose: () => void;
   isFormOpen: boolean;
   setIsFormOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface HamburgerMenuProps {
   isOpen: boolean;
+  handleCloseBottomNav: () => void;
 }
 
 export interface SignUpFormData {
@@ -86,5 +88,10 @@ export interface pcPlant {
     humidity_percentage: number;
     plant_description: string;
   };
-  createdAt: string;
+  updatedAt: string;
+}
+
+export interface plantOption {
+  _id: string;
+  plant_name: string;
 }

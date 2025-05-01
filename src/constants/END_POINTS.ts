@@ -15,7 +15,8 @@ export const history = {
 };
 
 export const pcs = {
-  create: `${baseUrl}/user/plant-care`,
   get: `${baseUrl}/user/plant-care`,
+  create: `${baseUrl}/user/plant-care`,
   delete: (id: string) => `${baseUrl}/user/plant-care/${id}`,
+  getPlantsOptions: `${baseUrl}/api/plants/options`,
 };
