@@ -1,25 +1,37 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { Switch } from "@headlessui/react";
 import { motion, AnimatePresence } from "framer-motion";
 import { pcPlant } from "../../../interfaces/interfaces";
 import { GiPlantWatering } from "react-icons/gi";
 import { GiWateringCan } from "react-icons/gi";
 import { formatDate } from "../../../constants/UTILS";
+import { IoClose } from "react-icons/io5";
 
 interface PlantCareCardProps {
   plant: pcPlant;
+  setIsModalOpen?: Dispatch<SetStateAction<boolean>>;
+  setSelectedPlantId?: (id: string) => void;
 }
 
-export default function PlantCareCard({ plant }: PlantCareCardProps) {
+export default function PlantCareCard({
+  plant,
+  setIsModalOpen,
+  setSelectedPlantId,
+}: PlantCareCardProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isWatered, setIsWatered] = useState(plant.isWatered);
 
+  const handleOpenModal = () => {
+    if (!plant) return;
+    setSelectedPlantId?.(plant._id);
+    setIsModalOpen?.(true);
+  };
   const handleToggleExpand = () => {
     setIsExpanded((prev) => !prev);
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg p-6 max-w-md w-full mx-auto border border-gray-200">
+    <div className="bg-white rounded-2xl shadow-lg p-6 max-w-md w-full mx-auto border border-gray-200 relative">
       <div className="flex items-center mb-4">
         <h2 className="text-2xl font-bold text-black">{plant.plant_name}</h2>
       </div>
@@ -47,7 +59,7 @@ export default function PlantCareCard({ plant }: PlantCareCardProps) {
             checked={isWatered}
             onChange={setIsWatered}
             className={`${
-              isWatered ? "bg-green-500" : "bg-gray-200"
+              isWatered ? "bg-green-500" : "bg-red-500"
             } relative inline-flex h-6 w-11 items-center rounded-full transition-colors`}
           >
             <span
@@ -76,6 +88,10 @@ export default function PlantCareCard({ plant }: PlantCareCardProps) {
             className="overflow-hidden mt-4 text-black"
           >
             <div className="space-y-2 text-sm">
+              <p>
+                <span className="font-semibold">Ideal Soil Moisture:</span>{" "}
+                {plant.info.plant_description}
+              </p>
               <p>
                 <span className="font-semibold">Ideal Soil Moisture:</span>{" "}
                 {plant.info.ideal_soil_moisture_percentage}%
@@ -108,14 +124,22 @@ export default function PlantCareCard({ plant }: PlantCareCardProps) {
                 <span className="font-semibold">Humidity:</span>{" "}
                 {plant.info.humidity_percentage}%
               </p>
-              <p>
-                <span className="font-semibold">Added on:</span>{" "}
-                {formatDate(plant.createdAt)}
+              <p className="font-semibold">
+                Last modified:{" "}
+                <span className="text-gray-500">
+                  {formatDate(plant.updatedAt)}
+                </span>
               </p>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
+      <button
+        onClick={handleOpenModal}
+        className="absolute -top-2 -right-2 bg-red-600 rounded-full p-1 shadow-lg hover:bg-red-700 transition-colors"
+      >
+        <IoClose size={20} className="text-white" />
+      </button>
     </div>
   );
 }
