@@ -7,8 +7,9 @@ const UserAvatar = ({ isOpen, setIsOpen }: HamburgerButtonProps) => {
   const { token, getUserData, userData } = useContext(StoreContext);
 
   useEffect(() => {
+    if (!token) return;
     getUserData();
-  }, [token, getUserData]);
+  }, [token]);
 
   return (
     /* Avatar Button */
