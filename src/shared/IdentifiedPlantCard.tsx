@@ -34,21 +34,20 @@ const IdentifiedPlantCard = ({
         <p className="text-left font-bold">
           {plantResult?.name || plant?.info.name || "Unknown Plant"}
         </p>
-        <div className="flex items-center justify-between flex-wrap gap-x-2">
-          <h3
-            className={`font-bold ${
-              plantResult?.condition === "healthy" ||
-              plant?.info.condition === "healthy"
-                ? "text-green-600"
-                : "text-red-600"
-            } `}
-          >
-            {plantResult?.condition ||
-              plant?.info.condition ||
-              "No Condition Data"}
-          </h3>
-          <button className="font-bold">Plant Care</button>
-        </div>
+
+        <h3
+          className={`font-bold ${
+            plantResult?.condition === "healthy" ||
+            plant?.info.condition === "healthy"
+              ? "text-green-600"
+              : "text-red-600"
+          } `}
+        >
+          {plantResult?.condition ||
+            plant?.info.condition ||
+            "No Condition Data"}
+        </h3>
+
         <p className="text-left mt-1 text-gray-500 text-sm font-medium">
           {plant?.createAt && formatDate(plant.createAt)}
         </p>
