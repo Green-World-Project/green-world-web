@@ -4,7 +4,8 @@ export const authUrls = {
   register: `${baseUrl}/register`,
   login: `${baseUrl}/login`,
   user: `${baseUrl}/user`,
-  editUser: `${baseUrl}/user/edit`,
+  editUserInfo: `${baseUrl}/user/edit/info`,
+  editUserPass: `${baseUrl}/user/edit/password`,
 };
 
 export const identify = `${baseUrl}/user/plant-identification`;
@@ -18,5 +19,6 @@ export const pcs = {
   get: `${baseUrl}/user/plant-care`,
   create: `${baseUrl}/user/plant-care`,
   delete: (id: string) => `${baseUrl}/user/plant-care/${id}`,
+  update: (id: string) => `${baseUrl}/user/plant-care/${id}`,
   getPlantsOptions: `${baseUrl}/api/plants/options`,
 };
