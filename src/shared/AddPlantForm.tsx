@@ -4,23 +4,23 @@ import { Controller, useForm } from "react-hook-form";
 import { FormToggleProps, plantOption } from "../interfaces/interfaces";
 import axios from "axios";
 import { pcs } from "../constants/END_POINTS";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { StoreContext } from "../context/StoreContext";
 import { toast } from "react-toastify";
 import PlantSelect from "../pages/PlantCare/components/PlantSelect";
+import { usePlantOptions } from "../hooks/usePlantOptions";
 
 const AddPlantForm = ({
-  onClose,
   isFormOpen,
   setIsFormOpen,
+  setPlants,
 }: FormToggleProps) => {
   const { token, userData } = useContext(StoreContext);
-  const [plantsOptions, setplantsOptions] = useState<plantOption[]>([]);
-  // const [selectedPlant, setSelectedPlant] = useState<plantOption | null>(null);
+  const plantOptions = usePlantOptions();
 
   interface FormValues {
     plant: plantOption | null;
-    groundArea: number;
+    groundArea: number | null;
     isWatered: boolean;
   }
 
@@ -28,32 +28,21 @@ const AddPlantForm = ({
     register,
     handleSubmit,
     control,
+    reset,
     formState: { errors },
   } = useForm<FormValues>({
-    defaultValues: { plant: null, groundArea: 0.1, isWatered: false },
+    defaultValues: { plant: null, groundArea: null, isWatered: false },
   });
 
   useEffect(() => {
-    const fetchPlantOptions = async () => {
-      try {
-        if (!token || !userData) return;
-
-        const res = await axios.get(pcs.getPlantsOptions, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setplantsOptions(res.data);
-      } catch (error) {
-        console.error(error);
-        toast.error(
-          error instanceof Error ? error.message : "Something went wrong"
-        );
-      }
-    };
-
-    fetchPlantOptions();
-  }, [token, userData]);
+    if (isFormOpen) {
+      reset({
+        plant: null,
+        groundArea: null,
+        isWatered: false,
+      });
+    }
+  }, [isFormOpen, reset]);
 
   const onSubmit = async (data: FormValues) => {
     if (!token || !userData) return;
@@ -69,7 +58,8 @@ const AddPlantForm = ({
           Authorization: `Bearer ${token}`,
         },
       });
-      toast.success(response.data, {
+
+      toast.success(response.data.message, {
         autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
@@ -78,7 +68,9 @@ const AddPlantForm = ({
         progress: undefined,
         theme: "colored",
       });
-      onClose();
+
+      setPlants((prev) => [response.data.result, ...prev]);
+      setIsFormOpen(false);
     } catch (error) {
       console.error(error);
       toast.error(
@@ -101,7 +93,7 @@ const AddPlantForm = ({
             animate={{ backdropFilter: "blur(8px)" }}
             exit={{ backdropFilter: "blur(0px)" }}
             className="fixed inset-0 bg-black bg-opacity-50"
-            onClick={() => setIsFormOpen(false)} // Close the pop-up when clicking outside
+            onClick={() => setIsFormOpen(false)}
           />
           <motion.div
             initial={{ opacity: 0, y: -50 }}
@@ -139,7 +131,7 @@ const AddPlantForm = ({
                         Plant Name
                       </label>
                       <PlantSelect
-                        options={plantsOptions}
+                        options={plantOptions}
                         value={value}
                         onChange={(plant) => {
                           rhfOnChange(plant);
@@ -163,7 +155,6 @@ const AddPlantForm = ({
                   className="px-1 py-1 bg-[#E1F1F1] shadow-sm focus:shadow outline-none w-full focus:ring-2 
                     focus:ring-[#2ecc71] transition duration-300 ease-in-out rounded-sm"
                   type="number"
-                  step="0.01"
                   id="groundArea"
                   {...register("groundArea", {
                     required: "Ground Area is required",
