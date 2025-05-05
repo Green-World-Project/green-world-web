@@ -17,7 +17,7 @@ export default function PlantCare() {
         <button
           className="text-center text-[1rem] cursor-pointer font-medium text-white border-[2px] border-[#43a047] bg-[#43a047] px-4 py-2
           rounded-md transition-all hover:bg-[#2e7d32] hover:scale-105 hover:border-[#2e7d32]"
-          onClick={() => setIsFormOpen(!isFormOpen)}
+          onClick={() => setIsFormOpen(true)}
         >
           Add Plant
         </button>
