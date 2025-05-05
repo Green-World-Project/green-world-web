@@ -6,7 +6,7 @@ export interface HamburgerButtonProps {
 }
 
 export interface FormToggleProps {
-  onClose: () => void;
+  setPlants: React.Dispatch<React.SetStateAction<pcPlant[]>>;
   isFormOpen: boolean;
   setIsFormOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -38,6 +38,8 @@ export interface userDataTypes {
   phoneNumber: string;
   age: number;
   gender: string;
+  currentPassword?: string;
+  newPassword?: string;
 }
 
 export interface PlantInfo {
