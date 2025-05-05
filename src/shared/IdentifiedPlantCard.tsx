@@ -1,5 +1,6 @@
 import { IoClose } from "react-icons/io5";
 import { IdentifiedPlantCardProps } from "../interfaces/interfaces";
+import { motion } from "framer-motion";
 import { formatDate } from "../constants/UTILS";
 
 const IdentifiedPlantCard = ({
@@ -20,7 +21,8 @@ const IdentifiedPlantCard = ({
   };
 
   return (
-    <div
+    <motion.div
+      layout
       className={`${"relative"} w-full pb-2 ${maxWidth}  ${height}  shadow-lg max-[400px]min-h-96 rounded-md border border-gray-200 bg-white`}
     >
       <div className="w-full h-[75%] rounded-t-md">
@@ -59,7 +61,7 @@ const IdentifiedPlantCard = ({
       >
         <IoClose size={iconSize || 20} className="text-white" />
       </button>
-    </div>
+    </motion.div>
   );
 };
 
