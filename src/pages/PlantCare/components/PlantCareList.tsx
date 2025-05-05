@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { StoreContext } from "../../../context/StoreContext";
 import LoadingSpinner from "../../../shared/LoadingSpinner";
 import axios from "axios";
@@ -18,29 +18,28 @@ interface PlantCareListProps {
 const PlantCareList = ({ isFormOpen, setIsFormOpen }: PlantCareListProps) => {
   const { token, userData } = useContext(StoreContext);
   const [loading, setLoading] = useState(true);
-  const [plants, setPlants] = useState([]);
+  const [plants, setPlants] = useState<pcPlant[]>([]);
   const [selectedPlantId, setSelectedPlantId] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const fetchPlantCare = useCallback(async () => {
-    if (!token || !userData) return;
-    setLoading(true);
-    try {
-      const res = await axios.get(pcs.get, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setPlants(res.data);
-    } catch (error) {
-      console.error(error);
-      toast.error("Error fetching plant care list.");
-    } finally {
-      setLoading(false);
-    }
-  }, [token, userData]);
-
   useEffect(() => {
+    const fetchPlantCare = async () => {
+      if (!token || !userData) return;
+      setLoading(true);
+      try {
+        const res = await axios.get(pcs.get, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setPlants(res.data);
+      } catch (error) {
+        console.error(error);
+        toast.error("Error fetching plant care list.");
+      } finally {
+        setLoading(false);
+      }
+    };
     fetchPlantCare();
-  }, [fetchPlantCare]);
+  }, [token, userData]);
 
   const handleRemovePlant = async () => {
     if (!selectedPlantId) return;
@@ -77,53 +76,64 @@ const PlantCareList = ({ isFormOpen, setIsFormOpen }: PlantCareListProps) => {
   return loading ? (
     <LoadingSpinner />
   ) : (
-    <motion.div
-      className="grid justify-items-center items-start gap-x-6 gap-y-10 sm:grid-cols-1 md:grid-cols-2 
-    lg:grid-cols-3 xl:grid-cols-4 mb-16"
-      initial="hidden"
-      animate="visible"
-      variants={{
-        hidden: {},
-        visible: {
-          transition: {
-            staggerChildren: 0.2,
-          },
-        },
-      }}
-    >
-      {!plants && <div className="h-screen ">sdds</div>}
-      {plants.map((plant: pcPlant) => (
+    <>
+      {!Array.isArray(plants) || plants.length === 0 ? (
+        <div>
+          <p className="text-lg text-gray-500">No plant care entries found.</p>
+        </div>
+      ) : (
         <motion.div
-          key={plant._id}
+          className="grid justify-items-center items-start gap-x-6 gap-y-10 sm:grid-cols-1 md:grid-cols-2 
+          lg:grid-cols-3 xl:grid-cols-4 mb-16"
+          initial="hidden"
+          animate="visible"
           variants={{
-            hidden: { opacity: 0, y: 20 },
-            visible: { opacity: 1, y: 0 },
+            hidden: {},
+            visible: {
+              transition: {
+                staggerChildren: 0.2,
+              },
+            },
           }}
-          transition={{ duration: 0.4 }}
-          className="w-full"
         >
-          <PlantCareCard
-            plant={plant}
-            setIsModalOpen={setIsModalOpen}
-            setSelectedPlantId={setSelectedPlantId}
-          />
+          {plants.map((plant: pcPlant) => (
+            <motion.div
+              key={plant._id}
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0 },
+              }}
+              transition={{ duration: 0.4 }}
+              className="w-full"
+            >
+              <PlantCareCard
+                plant={plant}
+                setIsModalOpen={setIsModalOpen}
+                onUpdated={(upd) =>
+                  setPlants((prev) =>
+                    prev.map((x) => (x._id === upd._id ? upd : x))
+                  )
+                }
+                setSelectedPlantId={setSelectedPlantId}
+              />
+            </motion.div>
+          ))}
         </motion.div>
-      ))}
+      )}
+
+      <AddPlantForm
+        setPlants={setPlants}
+        isFormOpen={isFormOpen}
+        setIsFormOpen={setIsFormOpen}
+      />
+
       <ConfirmationModal
         onConfirm={handleRemovePlant}
         onClose={() => setIsModalOpen(false)}
         isOpen={isModalOpen}
         message="Are you sure you want to remove this plant from your plant care list?"
       />
-      <AddPlantForm
-        onClose={() => {
-          setIsFormOpen(false);
-          fetchPlantCare(); // 3️⃣ refetch on close
-        }}
-        isFormOpen={isFormOpen}
-        setIsFormOpen={setIsFormOpen}
-      />
-    </motion.div>
+    </>
   );
 };
 
