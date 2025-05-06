@@ -9,7 +9,7 @@ export default function PlantCare() {
   }, []);
 
   return (
-    <div className="container-custom px-[2rem] lg:px-[4rem] flex flex-col min-h-screen">
+    <div className="container-custom px-[2rem] lg:px-[4rem] flex flex-col">
       <div className="flex flex-row justify-between mb-12">
         <h1 className="text-[#1b5e20] text-4xl font-bold text-left">
           Plant Care

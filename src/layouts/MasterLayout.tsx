@@ -6,7 +6,9 @@ export default function MasterLayout() {
   return (
     <>
       <Navbar />
-      <Outlet />
+      <main className="min-h-screen">
+        <Outlet />
+      </main>
       <Footer />
     </>
   );
