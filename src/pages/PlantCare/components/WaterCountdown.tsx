@@ -23,14 +23,16 @@ export function WaterCountdown({ nextWateringDate }: WaterCountdownProps) {
 
   return (
     <div className="inline-flex items-center space-x-2">
-      <span className="font-semibold">Water In:</span>
-      <span
-        className={`font-mono font-semibold text-lg ${
-          countdown === "00:00:00:00" ? "text-red-600" : "text-green-900"
-        }`}
-      >
-        {countdown}
-      </span>
+      <p className="font-semibold">
+        <span>Time to Water:</span>{" "}
+        <span
+          className={`font-mono  ${
+            countdown === "00:00:00:00" ? "text-red-600" : "text-green-900"
+          }`}
+        >
+          {countdown}
+        </span>
+      </p>
       <FiClock />
     </div>
   );
