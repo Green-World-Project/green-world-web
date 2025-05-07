@@ -21,6 +21,7 @@ import axios from "axios";
 import { pcs } from "../../../constants/END_POINTS";
 import { toast } from "react-toastify";
 import PlantCareDropdown from "./PlantCareDropdown";
+import { WaterCountdown } from "./WaterCountdown";
 
 interface PlantCareCardProps {
   plant: pcPlant;
@@ -195,6 +196,7 @@ export default function PlantCareCard({
             </p>
           </div>
         )}
+        <WaterCountdown nextWateringDate={plant.nextWateringDate} />
         <div className="flex items-center justify-between space-x-2 ">
           <div className="flex gap-1 text-black">
             <span className="font-semibold ">

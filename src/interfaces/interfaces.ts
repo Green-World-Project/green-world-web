@@ -79,6 +79,7 @@ export interface pcPlant {
   waterNeed: number;
   groundArea: number;
   isWatered: boolean;
+  nextWateringDate: string;
   info: {
     ideal_soil_moisture_percentage: number;
     optimal_temperature_celsius: number;
