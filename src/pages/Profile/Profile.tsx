@@ -126,6 +126,10 @@ export default function Profile() {
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     if (userData) {
       reset(userData);
     }
