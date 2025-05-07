@@ -81,6 +81,8 @@ export interface pcPlant {
   isWatered: boolean;
   nextWateringDate: string;
   info: {
+    category: string;
+    plant_description: string;
     ideal_soil_moisture_percentage: number;
     optimal_temperature_celsius: number;
     light_exposure_hours: number;
@@ -89,7 +91,6 @@ export interface pcPlant {
     water_duration_days: number;
     daily_water_requirement_liters_per_m2: number;
     humidity_percentage: number;
-    plant_description: string;
   };
   updatedAt: string;
 }

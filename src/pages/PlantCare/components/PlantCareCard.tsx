@@ -243,9 +243,10 @@ export default function PlantCareCard({
           >
             <div className="space-y-2 text-sm">
               <p>
-                <span className="font-semibold">Description:</span>{" "}
-                {plant.info.plant_description}
+                <span className="font-semibold">Category:</span>{" "}
+                {plant.info.category}
               </p>
+
               <p>
                 <span className="font-semibold">Ideal Soil Moisture:</span>{" "}
                 {plant.info.ideal_soil_moisture_percentage}%
@@ -277,6 +278,10 @@ export default function PlantCareCard({
               <p>
                 <span className="font-semibold">Humidity:</span>{" "}
                 {plant.info.humidity_percentage}%
+              </p>
+              <p>
+                <span className="font-semibold">Description:</span>{" "}
+                {plant.info.plant_description}
               </p>
               <p className="font-semibold">
                 Last modified:{" "}
