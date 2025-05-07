@@ -23,7 +23,7 @@ export const HamburgerButton = ({
 
   return (
     <button
-      className="flex items-center cursor-pointer min-[941px]:hidden "
+      className="flex items-center cursor-pointer min-[941px]:hidden"
       onClick={toggleMenu}
     >
       <div className="space-y-[5px]">
@@ -47,7 +47,10 @@ export const HamburgerButton = ({
   );
 };
 
-const HamburgerMenu = ({ isOpen }: HamburgerMenuProps) => {
+const HamburgerMenu = ({
+  isOpen,
+  handleCloseBottomNav,
+}: HamburgerMenuProps) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { token, logout } = useContext(StoreContext);
@@ -66,6 +69,7 @@ const HamburgerMenu = ({ isOpen }: HamburgerMenuProps) => {
     >
       <ul className="flex flex-col items-center space-y-4 py-4">
         <Link
+          onClick={handleCloseBottomNav}
           to="/"
           className={`nav-tab relative cursor-pointer text-[#2e7d32] flex gap-2 ${
             location.pathname === "/home" ? "active" : ""
@@ -75,6 +79,7 @@ const HamburgerMenu = ({ isOpen }: HamburgerMenuProps) => {
           Home
         </Link>
         <Link
+          onClick={handleCloseBottomNav}
           to="/identify"
           className={`nav-tab relative cursor-pointer text-[#2e7d32] flex items-center gap-2 ${
             location.pathname === "/identify" ? "active" : ""
@@ -84,6 +89,7 @@ const HamburgerMenu = ({ isOpen }: HamburgerMenuProps) => {
           Identify
         </Link>
         <Link
+          onClick={handleCloseBottomNav}
           to="/plantcare"
           className={`nav-tab relative cursor-pointer text-[#2e7d32] flex items-center gap-2 ${
             location.pathname === "/plantcare" ? "active" : ""
@@ -93,6 +99,7 @@ const HamburgerMenu = ({ isOpen }: HamburgerMenuProps) => {
           Plant Care
         </Link>
         <Link
+          onClick={handleCloseBottomNav}
           to="/"
           className={`nav-tab relative cursor-pointer text-[#2e7d32] flex items-center gap-2 ${
             location.pathname === "/about-us" ? "active" : ""
@@ -104,6 +111,7 @@ const HamburgerMenu = ({ isOpen }: HamburgerMenuProps) => {
         {token && (
           <>
             <Link
+              onClick={handleCloseBottomNav}
               to="/history"
               className={`nav-tab relative cursor-pointer text-[#2e7d32] flex items-center gap-2 ${
                 location.pathname === "/history" ? "active" : ""
@@ -113,6 +121,7 @@ const HamburgerMenu = ({ isOpen }: HamburgerMenuProps) => {
               History
             </Link>
             <Link
+              onClick={handleCloseBottomNav}
               to="/profile"
               className={`nav-tab relative cursor-pointer text-[#2e7d32] flex items-center gap-2 ${
                 location.pathname === "/profile" ? "active" : ""

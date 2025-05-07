@@ -6,12 +6,14 @@ export interface HamburgerButtonProps {
 }
 
 export interface FormToggleProps {
+  setPlants: React.Dispatch<React.SetStateAction<pcPlant[]>>;
   isFormOpen: boolean;
   setIsFormOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface HamburgerMenuProps {
   isOpen: boolean;
+  handleCloseBottomNav: () => void;
 }
 
 export interface SignUpFormData {
@@ -36,6 +38,8 @@ export interface userDataTypes {
   phoneNumber: string;
   age: number;
   gender: string;
+  currentPassword?: string;
+  newPassword?: string;
 }
 
 export interface PlantInfo {
@@ -67,4 +71,30 @@ export interface pcsDataTypes {
   plantName: string;
   wateringTime: number;
   watering?: boolean;
+}
+
+export interface pcPlant {
+  _id: string;
+  plant_name: string;
+  waterNeed: number;
+  groundArea: number;
+  isWatered: boolean;
+  nextWateringDate: string;
+  info: {
+    ideal_soil_moisture_percentage: number;
+    optimal_temperature_celsius: number;
+    light_exposure_hours: number;
+    optimal_soil_ph_level: number;
+    recommended_npk_ratio: string;
+    water_duration_days: number;
+    daily_water_requirement_liters_per_m2: number;
+    humidity_percentage: number;
+    plant_description: string;
+  };
+  updatedAt: string;
+}
+
+export interface plantOption {
+  _id: string;
+  plant_name: string;
 }

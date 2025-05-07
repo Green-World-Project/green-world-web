@@ -1,5 +1,7 @@
 import { IoClose } from "react-icons/io5";
 import { IdentifiedPlantCardProps } from "../interfaces/interfaces";
+import { motion } from "framer-motion";
+import { formatDate } from "../constants/UTILS";
 
 const IdentifiedPlantCard = ({
   plantResult,
@@ -19,7 +21,8 @@ const IdentifiedPlantCard = ({
   };
 
   return (
-    <div
+    <motion.div
+      layout
       className={`${"relative"} w-full pb-2 ${maxWidth}  ${height}  shadow-lg max-[400px]min-h-96 rounded-md border border-gray-200 bg-white`}
     >
       <div className="w-full h-[75%] rounded-t-md">
@@ -33,32 +36,22 @@ const IdentifiedPlantCard = ({
         <p className="text-left font-bold">
           {plantResult?.name || plant?.info.name || "Unknown Plant"}
         </p>
-        <div className="flex items-center justify-between flex-wrap gap-x-2">
-          <h3
-            className={`font-bold ${
-              plantResult?.condition === "healthy" ||
-              plant?.info.condition === "healthy"
-                ? "text-green-600"
-                : "text-red-600"
-            } `}
-          >
-            {plantResult?.condition ||
-              plant?.info.condition ||
-              "No Condition Data"}
-          </h3>
-          <button className="font-bold">Plant Care</button>
-        </div>
+
+        <h3
+          className={`font-bold ${
+            plantResult?.condition === "healthy" ||
+            plant?.info.condition === "healthy"
+              ? "text-green-600"
+              : "text-red-600"
+          } `}
+        >
+          {plantResult?.condition ||
+            plant?.info.condition ||
+            "No Condition Data"}
+        </h3>
+
         <p className="text-left mt-1 text-gray-500 text-sm font-medium">
-          {plant?.createAt &&
-            new Date(plant.createAt).toLocaleString("en-US", {
-              month: "long",
-              day: "2-digit",
-              year: "numeric",
-              hour: "2-digit",
-              minute: "2-digit",
-              second: "2-digit",
-              hour12: true,
-            })}
+          {plant?.createAt && formatDate(plant.createAt)}
         </p>
       </div>
 
@@ -68,7 +61,7 @@ const IdentifiedPlantCard = ({
       >
         <IoClose size={iconSize || 20} className="text-white" />
       </button>
-    </div>
+    </motion.div>
   );
 };
 
