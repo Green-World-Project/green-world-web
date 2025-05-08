@@ -24,6 +24,7 @@ export default function PlantSelect({
   onChange,
 }: PlantSelectProps) {
   const [query, setQuery] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
 
   const filteredOptions =
     query === ""
@@ -32,18 +33,37 @@ export default function PlantSelect({
           opt.plant_name.toLowerCase().includes(query.toLowerCase())
         );
 
+  const handleSelect = (selectedOption: PlantOption) => {
+    onChange(selectedOption);
+    setIsOpen(false);
+  };
+
+  const handleBlur = (event: React.FocusEvent) => {
+    const currentTarget = event.currentTarget;
+    requestAnimationFrame(() => {
+      if (!currentTarget.contains(document.activeElement)) {
+        setIsOpen(false);
+      }
+    });
+  };
+
   return (
     <div className="w-full">
-      <Combobox value={value} onChange={onChange}>
-        <div className="relative mt-1">
+      <Combobox value={value} onChange={handleSelect}>
+        <div className="relative mt-1" onBlur={handleBlur}>
           <ComboboxInput
             className="w-full rounded-sm bg-[#E1F1F1] px-2 py-1 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#2ecc71]"
             displayValue={(opt: PlantOption) => opt?.plant_name || ""}
-            onChange={(event) => setQuery(event.target.value)}
+            onChange={(event) => {
+              setQuery(event.target.value);
+              setIsOpen(true);
+            }}
+            onFocus={() => setIsOpen(true)}
             placeholder="Select a plant…"
           />
           <Transition
             as={Fragment}
+            show={isOpen}
             leave="transition ease-in duration-100"
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
@@ -56,11 +76,7 @@ export default function PlantSelect({
                   <ComboboxOption
                     key={opt._id}
                     value={opt}
-                    className={({ active }) =>
-                      `cursor-pointer select-none px-2 py-1 ${
-                        active ? "bg-green-100" : ""
-                      }`
-                    }
+                    className="cursor-pointer select-none px-2 py-1  data-[active]:bg-green-100 hover:bg-green-100"
                   >
                     {opt.plant_name}
                   </ComboboxOption>
