@@ -6,8 +6,10 @@ function ChangePass() {
   const [currPasswordShow, setcurrPasswordShow] = useState(false);
   const [newPasswordShow, setNewPasswordShow] = useState(false);
   const { register } = useFormContext();
+
   return (
     <div className="flex flex-row gap-7 max-md:flex-col">
+      {/* Current Password Field */}
       <div className="flex flex-col gap-1 grow">
         <label className="font-medium" htmlFor="yourPassword">
           Your Password
@@ -15,14 +17,14 @@ function ChangePass() {
         <div className="relative flex items-center">
           <input
             id="yourPassword"
+            placeholder="●●●●●●●●●●●●●"
             autoComplete="current-password"
             type={currPasswordShow ? "text" : "password"}
             {...register("currentPassword")}
             className={`
-                        pl-2 pr-8 py-1 w-full rounded-sm shadow-sm outline-none
-                        focus:ring-2 focus:ring-[#2ecc71] bg-[#E1F1F1] transition  duration-300 ease-in-out
-                       
-                      `}
+              pl-2 pr-8 py-1 w-full rounded-sm shadow-sm outline-none placeholder-gray-500 placeholder:text-base placeholder:font-normal
+              focus:ring-2 focus:ring-[#2ecc71] bg-[#E1F1F1] transition duration-300 ease-in-out
+            `}
           />
           {currPasswordShow ? (
             <button
@@ -43,6 +45,8 @@ function ChangePass() {
           )}
         </div>
       </div>
+
+      {/* New Password Field */}
       <div className="flex flex-col gap-1 grow">
         <label className="font-medium" htmlFor="newPassword">
           New Password
@@ -50,17 +54,14 @@ function ChangePass() {
         <div className="relative flex items-center">
           <input
             id="newPassword"
+            placeholder="●●●●●●●●●●●●●"
             autoComplete="new-password"
             type={newPasswordShow ? "text" : "password"}
             {...register("newPassword")}
             className={`
-                        pl-2 pr-8 py-1 w-full rounded-sm shadow-sm outline-none
-                        focus:ring-2 focus:ring-[#2ecc71] bg-[#E1F1F1] transition  duration-300 ease-in-out
-                     
-                            
-                     
-                        
-                      `}
+              pl-2 pr-8 py-1 w-full rounded-sm shadow-sm outline-none placeholder-gray-500 placeholder:text-base placeholder:font-normal
+              focus:ring-2 focus:ring-[#2ecc71] bg-[#E1F1F1] transition duration-300 ease-in-out
+            `}
           />
           {newPasswordShow ? (
             <button
