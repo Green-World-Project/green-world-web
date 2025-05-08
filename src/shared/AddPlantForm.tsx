@@ -156,7 +156,7 @@ const AddPlantForm = ({
                     focus:ring-[#2ecc71] transition duration-300 ease-in-out rounded-sm"
                   type="number"
                   id="groundArea"
-                  placeholder="0.1"
+                  placeholder="4"
                   {...register("groundArea", {
                     required: "Ground Area is required",
                     min: {
