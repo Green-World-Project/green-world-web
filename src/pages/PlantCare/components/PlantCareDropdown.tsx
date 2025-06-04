@@ -100,7 +100,7 @@ export default function PlantCareDropdown({
                   <ComboboxOption
                     key={o._id}
                     value={o}
-                    className="cursor-pointer select-none px-3 py-2 data-[active]:bg-green-100 data-[selected]:font-semibold"
+                    className="cursor-pointer select-none px-3 py-2 data-[active]:bg-green-100 hover:bg-green-100 data-[selected]:font-semibold"
                   >
                     {o.plant_name}
                   </ComboboxOption>
