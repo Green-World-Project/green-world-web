@@ -127,7 +127,7 @@ export default function Navbar() {
             animate={{ height: "auto" }}
             exit={{ height: 0 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="nav-bottom flex items-center justify-start px-[2.5rem] lg:px-[4rem] max-w-[2130px] max-[940px]:hidden mx-auto w-full overflow-hidden"
+            className="nav-bottom flex items-center justify-start px-[2.5rem] lg:px-[4rem] max-w-[2130px] max-[940px]:hidden mx-auto w-full overflow-hidden z-50"
           >
             <motion.div
               initial={{ opacity: 0 }}
