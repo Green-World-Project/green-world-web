@@ -9,6 +9,7 @@ import PlantCareCard from "./PlantCareCard";
 import { pcPlant } from "../../../interfaces/interfaces";
 import ConfirmationModal from "../../../shared/ConfirmationModal";
 import AddPlantForm from "../../../shared/AddPlantForm";
+import Sidebar from "./Sidebar";
 
 interface PlantCareListProps {
   isFormOpen: boolean;
@@ -19,8 +20,9 @@ const PlantCareList = ({ isFormOpen, setIsFormOpen }: PlantCareListProps) => {
   const { token, userData } = useContext(StoreContext);
   const [loading, setLoading] = useState(true);
   const [plants, setPlants] = useState<pcPlant[]>([]);
-  const [selectedPlantId, setSelectedPlantId] = useState<string | null>(null);
+  const [selectedPlant, setSelectedPlant] = useState<pcPlant | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSidebarOpen, setIsSidbarOpen] = useState(false);
 
   useEffect(() => {
     const fetchPlantCare = async () => {
@@ -42,9 +44,9 @@ const PlantCareList = ({ isFormOpen, setIsFormOpen }: PlantCareListProps) => {
   }, [token, userData]);
 
   const handleRemovePlant = async () => {
-    if (!selectedPlantId) return;
+    if (!selectedPlant) return;
     try {
-      const response = await axios.delete(pcs.delete(selectedPlantId), {
+      const response = await axios.delete(pcs.delete(selectedPlant._id), {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -61,7 +63,7 @@ const PlantCareList = ({ isFormOpen, setIsFormOpen }: PlantCareListProps) => {
       });
 
       setPlants((prev) =>
-        prev.filter((plant: pcPlant) => plant._id !== selectedPlantId)
+        prev.filter((plant: pcPlant) => plant._id !== selectedPlant._id)
       );
     } catch (error) {
       console.error(error);
@@ -71,6 +73,10 @@ const PlantCareList = ({ isFormOpen, setIsFormOpen }: PlantCareListProps) => {
     }
 
     setIsModalOpen(false);
+  };
+
+  const handleSidebarClose = () => {
+    setIsSidbarOpen(false);
   };
 
   return loading ? (
@@ -109,12 +115,13 @@ const PlantCareList = ({ isFormOpen, setIsFormOpen }: PlantCareListProps) => {
               <PlantCareCard
                 plant={plant}
                 setIsModalOpen={setIsModalOpen}
+                setIsSidbarOpen={setIsSidbarOpen}
                 onUpdated={(upd) =>
                   setPlants((prev) =>
                     prev.map((x) => (x._id === upd._id ? upd : x))
                   )
                 }
-                setSelectedPlantId={setSelectedPlantId}
+                setSelectedPlant={setSelectedPlant}
               />
             </motion.div>
           ))}
@@ -129,10 +136,28 @@ const PlantCareList = ({ isFormOpen, setIsFormOpen }: PlantCareListProps) => {
 
       <ConfirmationModal
         onConfirm={handleRemovePlant}
-        onClose={() => setIsModalOpen(false)}
+        onClose={() => {
+          setSelectedPlant(null);
+          setIsModalOpen(false);
+        }}
         isOpen={isModalOpen}
         message="Are you sure you want to remove this plant from your plant care list?"
       />
+      {selectedPlant && (
+        <Sidebar
+          selectedPlant={{
+            ...selectedPlant,
+            info: {
+              ...selectedPlant.info,
+              optimal_soil_ph_level: String(
+                selectedPlant.info.optimal_soil_ph_level
+              ),
+            },
+          }}
+          isSidebarOpen={isSidebarOpen}
+          onClose={handleSidebarClose}
+        />
+      )}
     </>
   );
 };
