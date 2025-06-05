@@ -6,11 +6,10 @@ import {
   useState,
 } from "react";
 import { Switch } from "@headlessui/react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { pcPlant } from "../../../interfaces/interfaces";
 import { GiPlantWatering } from "react-icons/gi";
 import { GiWateringCan } from "react-icons/gi";
-import { formatDate } from "../../../constants/UTILS";
 import { MdClose, MdEdit, MdSave } from "react-icons/md";
 import { IoMdTrash } from "react-icons/io";
 
@@ -26,17 +25,18 @@ import { WaterCountdown } from "./WaterCountdown";
 interface PlantCareCardProps {
   plant: pcPlant;
   setIsModalOpen?: Dispatch<SetStateAction<boolean>>;
-  setSelectedPlantId?: (id: string) => void;
+  setSelectedPlant?: (plant: pcPlant) => void;
   onUpdated: (upd: pcPlant) => void;
+  setIsSidbarOpen?: Dispatch<SetStateAction<boolean>>;
 }
 
 export default function PlantCareCard({
   plant,
   setIsModalOpen,
-  setSelectedPlantId,
+  setSelectedPlant,
   onUpdated,
+  setIsSidbarOpen,
 }: PlantCareCardProps) {
-  const [isExpanded, setIsExpanded] = useState(false);
   const [selectedPlantID, setSelectedPlantID] = useState(plant._id);
   const [groundArea, setGroundArea] = useState(plant.groundArea);
   const [isWatered, setIsWatered] = useState(plant.isWatered);
@@ -61,12 +61,14 @@ export default function PlantCareCard({
 
   const handleOpenModal = () => {
     if (!plant) return;
-    setSelectedPlantId?.(plant._id);
+    setIsSidbarOpen?.(false);
+    setSelectedPlant?.(plant);
     setIsModalOpen?.(true);
   };
 
   const handleToggleExpand = () => {
-    setIsExpanded((prev) => !prev);
+    setSelectedPlant?.(plant);
+    setIsSidbarOpen?.(true);
   };
 
   const handleSave = async () => {
@@ -110,7 +112,6 @@ export default function PlantCareCard({
 
   const handleEdit = () => {
     setIsEditing(true);
-    setIsExpanded(false);
   };
 
   const handleCancel = () => {
@@ -229,70 +230,8 @@ export default function PlantCareCard({
         onClick={handleToggleExpand}
         className="mt-4 text-sm font-medium text-green-600 hover:underline focus:outline-none"
       >
-        {isExpanded ? "Show Less" : "More Info"}
+        More Info
       </button>
-
-      <AnimatePresence initial={false}>
-        {isExpanded && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
-            className="overflow-hidden mt-4 text-black"
-          >
-            <div className="space-y-2 text-sm">
-              <p>
-                <span className="font-semibold">Category:</span>{" "}
-                {plant.info.category}
-              </p>
-
-              <p>
-                <span className="font-semibold">Ideal Soil Moisture:</span>{" "}
-                {plant.info.ideal_soil_moisture_percentage}%
-              </p>
-              <p>
-                <span className="font-semibold">Optimal Temp:</span>{" "}
-                {plant.info.optimal_temperature_celsius}°C
-              </p>
-              <p>
-                <span className="font-semibold">Light Exposure:</span>{" "}
-                {plant.info.light_exposure_hours} hrs/day
-              </p>
-              <p>
-                <span className="font-semibold">Soil pH Level:</span>{" "}
-                {plant.info.optimal_soil_ph_level}
-              </p>
-              <p>
-                <span className="font-semibold">Recommended NPK Ratio:</span>{" "}
-                {plant.info.recommended_npk_ratio}
-              </p>
-              <p>
-                <span className="font-semibold">Water Every:</span>{" "}
-                {plant.info.water_duration_days} days
-              </p>
-              <p>
-                <span className="font-semibold">Daily Water Need:</span>{" "}
-                {plant.info.daily_water_requirement_liters_per_m2} L/m²
-              </p>
-              <p>
-                <span className="font-semibold">Humidity:</span>{" "}
-                {plant.info.humidity_percentage}%
-              </p>
-              <p>
-                <span className="font-semibold">Description:</span>{" "}
-                {plant.info.plant_description}
-              </p>
-              <p className="font-semibold">
-                Last modified:{" "}
-                <span className="text-gray-500">
-                  {formatDate(plant.updatedAt)}
-                </span>
-              </p>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </motion.div>
   );
 }
