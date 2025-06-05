@@ -17,6 +17,7 @@ export default function Navbar() {
   const navigate = useNavigate();
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
+  const [isReallyOpen, setIsReallyOpen] = useState(false);
   const handleLoginClick = useLogin();
 
   const handleLogout = () => {
@@ -35,8 +36,22 @@ export default function Navbar() {
     }
   }, [token]);
 
+  useEffect(() => {
+    if (isOpen) {
+      setIsReallyOpen(true);
+    } else {
+      // Delay z-index lowering until after animation (200ms)
+      const timeout = setTimeout(() => setIsReallyOpen(false), 290);
+      return () => clearTimeout(timeout);
+    }
+  }, [isOpen]);
+
   return (
-    <nav className="navbar flex flex-col bg-white bg-opacity-95 backdrop-blur-sm shadow-lg shadow-black/10 fixed top-0 left-0 right-0 z-50 ">
+    <nav
+      className={`navbar flex flex-col bg-white bg-opacity-95 backdrop-blur-sm shadow-lg shadow-black/10 fixed top-0 left-0 right-0 ${
+        isOpen || isReallyOpen ? "z-50" : "z-40"
+      }`}
+    >
       <div className="nav-top border-b border-black/10 px-[2rem] lg:px-[3rem] py-[1rem]">
         <div className="max-w-[2000px] mx-auto w-full flex items-center justify-between">
           <div className="left-nav flex items-center gap-3">
