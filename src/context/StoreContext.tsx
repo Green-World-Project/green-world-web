@@ -7,7 +7,7 @@ import {
   useCallback,
 } from "react";
 import { useCookies } from "react-cookie";
-import { userDataTypes } from "../interfaces/interfaces";
+import { selectedPlant, userDataTypes } from "../interfaces/interfaces";
 import axios from "axios";
 import { authUrls } from "../constants/END_POINTS";
 
@@ -20,6 +20,8 @@ interface StoreContextTypes {
   login: (token: string) => void;
   logout: () => void;
   getUserData: () => void;
+  selectedPlant: selectedPlant | null;
+  setSelectedPlant: (plant: selectedPlant | null) => void;
 }
 
 export const StoreContext = createContext<StoreContextTypes>({
@@ -31,6 +33,8 @@ export const StoreContext = createContext<StoreContextTypes>({
   logout: () => {},
   getUserData: () => {},
   setUserData: () => {},
+  selectedPlant: null,
+  setSelectedPlant: () => {},
 });
 
 const StoreContextProvider = ({ children }: { children: ReactNode }) => {
@@ -38,6 +42,9 @@ const StoreContextProvider = ({ children }: { children: ReactNode }) => {
   const [cookies, setCookie, removeCookie] = useCookies(["token"]);
   const [token, setToken] = useState<string | null>(cookies.token || null);
   const [userData, setUserData] = useState<userDataTypes | null>(null);
+  const [selectedPlant, setSelectedPlant] = useState<selectedPlant | null>(
+    null
+  );
 
   // Function to handle user login
   const login = (newToken: string) => {
@@ -117,6 +124,8 @@ const StoreContextProvider = ({ children }: { children: ReactNode }) => {
     getUserData,
     setUserData,
     userData,
+    selectedPlant,
+    setSelectedPlant,
   };
 
   return (
