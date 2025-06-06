@@ -64,6 +64,7 @@ const StoreContextProvider = ({ children }: { children: ReactNode }) => {
   const logout = useCallback(() => {
     removeCookie("token", { path: "/" });
     setToken(null);
+    setUserData(null);
   }, [removeCookie, setToken]);
 
   // Function to get user data
