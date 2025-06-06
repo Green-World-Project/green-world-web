@@ -73,6 +73,19 @@ export interface pcsDataTypes {
   watering?: boolean;
 }
 
+type PcPlantInfo = {
+  category: string;
+  ideal_soil_moisture_percentage: number;
+  optimal_temperature_celsius: number;
+  light_exposure_hours: number;
+  optimal_soil_ph_level: string;
+  recommended_npk_ratio: string;
+  water_duration_days: number;
+  daily_water_requirement_liters_per_m2: number;
+  humidity_percentage: number;
+  plant_description: string;
+};
+
 export interface pcPlant {
   _id: string;
   plant_name: string;
@@ -80,22 +93,21 @@ export interface pcPlant {
   groundArea: number;
   isWatered: boolean;
   nextWateringDate: string;
-  info: {
-    category: string;
-    plant_description: string;
-    ideal_soil_moisture_percentage: number;
-    optimal_temperature_celsius: number;
-    light_exposure_hours: number;
-    optimal_soil_ph_level: number;
-    recommended_npk_ratio: string;
-    water_duration_days: number;
-    daily_water_requirement_liters_per_m2: number;
-    humidity_percentage: number;
-  };
+  info: PcPlantInfo;
   updatedAt: string;
 }
 
 export interface plantOption {
   _id: string;
   plant_name: string;
+}
+
+type PlantLog = {
+  wateringDate: string;
+};
+
+export interface selectedPlant extends pcPlant {
+  info: PcPlantInfo;
+  updatedAt: string;
+  logs?: PlantLog[];
 }
