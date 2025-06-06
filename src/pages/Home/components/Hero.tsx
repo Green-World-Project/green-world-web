@@ -1,5 +1,8 @@
+import { useContext } from "react";
 import heroImg from "../../../assets/right-side-hero.jpg";
 import { motion } from "framer-motion";
+import { StoreContext } from "../../../context/StoreContext";
+import { getTimeBasedGreeting } from "../../../constants/UTILS";
 
 export default function Hero() {
   const fadeLeft = {
@@ -11,6 +14,8 @@ export default function Hero() {
     hidden: { opacity: 0, x: 100 },
     visible: { opacity: 1, x: 0 },
   };
+
+  const { userData } = useContext(StoreContext);
 
   return (
     <section
@@ -28,6 +33,11 @@ export default function Hero() {
           <h1 className="text-6xl text-[#1b5e20] font-bold mb-5">
             Green World
           </h1>
+          {userData && (
+            <h2 className="text-3xl font-semibold text-[#388e3c] mb-4 drop-shadow-sm">
+              {getTimeBasedGreeting(userData.firstName)}
+            </h2>
+          )}
           <p className="font-normal text-[#2e7d32] text-2xl">
             Discover and identify the beautiful plants around you with our
             AI-powered technology

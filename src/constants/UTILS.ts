@@ -52,3 +52,21 @@ export const getWaterCountdown = (nextWateringDate: string): string => {
 
   return `${dd}:${hh}:${mm}:${ss}`;
 };
+
+export const getTimeBasedGreeting = (name: string) => {
+  const now = new Date();
+  const hour = now.getHours();
+
+  let greeting;
+  if (hour >= 5 && hour < 12) {
+    greeting = "Good morning";
+  } else if (hour >= 12 && hour < 18) {
+    greeting = "Good afternoon";
+  } else if (hour >= 18 && hour < 22) {
+    greeting = "Good evening";
+  } else {
+    greeting = "Good night";
+  }
+
+  return `${greeting}, ${name}`;
+};
