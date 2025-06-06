@@ -9,20 +9,23 @@ import PlantCareCard from "./PlantCareCard";
 import { pcPlant } from "../../../interfaces/interfaces";
 import ConfirmationModal from "../../../shared/ConfirmationModal";
 import AddPlantForm from "../../../shared/AddPlantForm";
-import Sidebar from "./Sidebar";
 
 interface PlantCareListProps {
   isFormOpen: boolean;
   setIsFormOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const PlantCareList = ({ isFormOpen, setIsFormOpen }: PlantCareListProps) => {
-  const { token, userData } = useContext(StoreContext);
+const PlantCareList = ({
+  isFormOpen,
+  setIsFormOpen,
+  setIsSidebarOpen,
+}: PlantCareListProps) => {
+  const { token, userData, selectedPlant, setSelectedPlant } =
+    useContext(StoreContext);
   const [loading, setLoading] = useState(true);
   const [plants, setPlants] = useState<pcPlant[]>([]);
-  const [selectedPlant, setSelectedPlant] = useState<pcPlant | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isSidebarOpen, setIsSidbarOpen] = useState(false);
 
   useEffect(() => {
     const fetchPlantCare = async () => {
@@ -75,10 +78,6 @@ const PlantCareList = ({ isFormOpen, setIsFormOpen }: PlantCareListProps) => {
     setIsModalOpen(false);
   };
 
-  const handleSidebarClose = () => {
-    setIsSidbarOpen(false);
-  };
-
   return loading ? (
     <LoadingSpinner />
   ) : (
@@ -89,8 +88,9 @@ const PlantCareList = ({ isFormOpen, setIsFormOpen }: PlantCareListProps) => {
         </div>
       ) : (
         <motion.div
-          className="grid justify-items-center items-start gap-x-6 gap-y-10 sm:grid-cols-1 md:grid-cols-2 
-          lg:grid-cols-3 xl:grid-cols-4 mb-16"
+          className="grid w-full gap-x-6 gap-y-10 mb-16 
+          [grid-template-columns:repeat(auto-fit,minmax(auto,1fr))] 
+          sm:[grid-template-columns:repeat(auto-fit,minmax(300px,1fr))]"
           initial="hidden"
           animate="visible"
           variants={{
@@ -115,13 +115,12 @@ const PlantCareList = ({ isFormOpen, setIsFormOpen }: PlantCareListProps) => {
               <PlantCareCard
                 plant={plant}
                 setIsModalOpen={setIsModalOpen}
-                setIsSidbarOpen={setIsSidbarOpen}
+                setIsSidebarOpen={setIsSidebarOpen}
                 onUpdated={(upd) =>
                   setPlants((prev) =>
                     prev.map((x) => (x._id === upd._id ? upd : x))
                   )
                 }
-                setSelectedPlant={setSelectedPlant}
               />
             </motion.div>
           ))}
@@ -143,21 +142,6 @@ const PlantCareList = ({ isFormOpen, setIsFormOpen }: PlantCareListProps) => {
         isOpen={isModalOpen}
         message="Are you sure you want to remove this plant from your plant care list?"
       />
-      {selectedPlant && (
-        <Sidebar
-          selectedPlant={{
-            ...selectedPlant,
-            info: {
-              ...selectedPlant.info,
-              optimal_soil_ph_level: String(
-                selectedPlant.info.optimal_soil_ph_level
-              ),
-            },
-          }}
-          isSidebarOpen={isSidebarOpen}
-          onClose={handleSidebarClose}
-        />
-      )}
     </>
   );
 };
