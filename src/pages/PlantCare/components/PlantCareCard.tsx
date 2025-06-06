@@ -25,24 +25,22 @@ import { WaterCountdown } from "./WaterCountdown";
 interface PlantCareCardProps {
   plant: pcPlant;
   setIsModalOpen?: Dispatch<SetStateAction<boolean>>;
-  setSelectedPlant?: (plant: pcPlant) => void;
   onUpdated: (upd: pcPlant) => void;
-  setIsSidbarOpen?: Dispatch<SetStateAction<boolean>>;
+  setIsSidebarOpen?: Dispatch<SetStateAction<boolean>>;
 }
 
 export default function PlantCareCard({
   plant,
   setIsModalOpen,
-  setSelectedPlant,
   onUpdated,
-  setIsSidbarOpen,
+  setIsSidebarOpen,
 }: PlantCareCardProps) {
   const [selectedPlantID, setSelectedPlantID] = useState(plant._id);
   const [groundArea, setGroundArea] = useState(plant.groundArea);
   const [isWatered, setIsWatered] = useState(plant.isWatered);
   const [isEditing, setIsEditing] = useState(false);
 
-  const { token } = useContext(StoreContext);
+  const { token, setSelectedPlant } = useContext(StoreContext);
   const plantOptions = usePlantOptions();
 
   useEffect(() => {
@@ -61,14 +59,14 @@ export default function PlantCareCard({
 
   const handleOpenModal = () => {
     if (!plant) return;
-    setIsSidbarOpen?.(false);
+    setIsSidebarOpen?.(false);
     setSelectedPlant?.(plant);
     setIsModalOpen?.(true);
   };
 
   const handleToggleExpand = () => {
     setSelectedPlant?.(plant);
-    setIsSidbarOpen?.(true);
+    setIsSidebarOpen?.(true);
   };
 
   const handleSave = async () => {
