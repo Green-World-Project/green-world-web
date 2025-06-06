@@ -29,16 +29,17 @@ It allows users to upload plant images for intelligent analysis, track plant con
 
 ## 📸 Screenshots
 
+  <br>  
 
-- **🌱 Home Page View**  
-  ![Home Page](![Screenshot (192)](https://github.com/user-attachments/assets/df9a497a-c912-43dc-97d1-516c5d24b3cc)
+  ![Screenshot (191)](https://github.com/user-attachments/assets/4b7bb5a3-d20c-4e02-bba7-a531b25a5525)
   
-- **🧾 History of Plant Uploads**  
-  ![History](![Screenshot (201)](https://github.com/user-attachments/assets/0053d1e8-d8ef-4e64-bd2b-5e33223aa7e7)
+  <br>  
 
+  ![Screenshot (201)](https://github.com/user-attachments/assets/0053d1e8-d8ef-4e64-bd2b-5e33223aa7e7)
 
-- **🌿 Plant Care View**  
-  ![Sidebar](![Screenshot (167)](https://github.com/user-attachments/assets/676b7598-7a18-4ce1-9a22-5e759f35de94)
+  <br> 
+
+  ![Screenshot (198)](https://github.com/user-attachments/assets/b069f187-f93e-4059-a2dc-0a3dc8ba9768)
 
 
 ---
@@ -58,6 +59,8 @@ It allows users to upload plant images for intelligent analysis, track plant con
 | Category             | Tools / Libraries                             |
 |----------------------|-----------------------------------------------|
 | **Framework**        | React                                          |
+| **Language**         | TypeScript                                     |
+| **Styling**          | Tailwind CSS                                   |
 | **Routing**          | React Router                                   |
 | **State Management** | Context API                                    |
 | **HTTP Client**      | Axios                                          |
@@ -66,5 +69,6 @@ It allows users to upload plant images for intelligent analysis, track plant con
 | **Components**       | Headless UI, React Icons                       |
 | **Animation**        | Framer Motion                                  |
 | **Notifications**    | React Toastify + Email-based reminder system   |
+
 
 ---
