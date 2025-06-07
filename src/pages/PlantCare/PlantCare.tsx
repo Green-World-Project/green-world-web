@@ -14,7 +14,7 @@ export default function PlantCare() {
     <div className="flex w-full min-h-screen">
       <div className="flex-1">
         <div className="container-custom px-[2rem] lg:px-[4rem] flex flex-col">
-          <div className="flex flex-row justify-between mb-12">
+          <div className="flex flex-row justify-between mb-12 gap-4">
             <h1 className="text-[#1b5e20] text-4xl font-bold text-left">
               Plant Care
             </h1>

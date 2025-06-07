@@ -22,8 +22,6 @@ interface StoreContextTypes {
   getUserData: () => void;
   selectedPlant: selectedPlant | null;
   setSelectedPlant: (plant: selectedPlant | null) => void;
-  expandedCardId: string | null;
-  setExpandedCardId: (id: string | null) => void;
 }
 
 export const StoreContext = createContext<StoreContextTypes>({
@@ -37,8 +35,6 @@ export const StoreContext = createContext<StoreContextTypes>({
   setUserData: () => {},
   selectedPlant: null,
   setSelectedPlant: () => {},
-  expandedCardId: null,
-  setExpandedCardId: () => {},
 });
 
 const StoreContextProvider = ({ children }: { children: ReactNode }) => {
@@ -49,7 +45,6 @@ const StoreContextProvider = ({ children }: { children: ReactNode }) => {
   const [selectedPlant, setSelectedPlant] = useState<selectedPlant | null>(
     null
   );
-  const [expandedCardId, setExpandedCardId] = useState<string | null>(null);
 
   // Function to handle user login
   const login = (newToken: string) => {
@@ -131,8 +126,6 @@ const StoreContextProvider = ({ children }: { children: ReactNode }) => {
     userData,
     selectedPlant,
     setSelectedPlant,
-    expandedCardId,
-    setExpandedCardId,
   };
 
   return (
