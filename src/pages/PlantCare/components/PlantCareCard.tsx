@@ -35,15 +35,13 @@ export default function PlantCareCard({
   setIsModalOpen,
   onUpdated,
   setIsSidebarOpen,
-  expanded,
 }: PlantCareCardProps) {
   const [selectedPlantID, setSelectedPlantID] = useState(plant._id);
   const [groundArea, setGroundArea] = useState(plant.groundArea);
   const [isWatered, setIsWatered] = useState(plant.isWatered);
   const [isEditing, setIsEditing] = useState(false);
 
-  const { token, setSelectedPlant, setExpandedCardId } =
-    useContext(StoreContext);
+  const { token, setSelectedPlant } = useContext(StoreContext);
   const plantOptions = usePlantOptions();
 
   useEffect(() => {
@@ -69,14 +67,7 @@ export default function PlantCareCard({
 
   const handleSidebarExpand = () => {
     setSelectedPlant?.(plant);
-    setExpandedCardId(plant._id);
     setIsSidebarOpen?.(true);
-  };
-
-  const handleSidebarCollapse = () => {
-    setSelectedPlant?.(null);
-    setExpandedCardId(null);
-    setIsSidebarOpen?.(false);
   };
 
   const handleSave = async () => {
@@ -234,21 +225,12 @@ export default function PlantCareCard({
         </div>
       </div>
 
-      {expanded ? (
-        <button
-          onClick={handleSidebarCollapse}
-          className="mt-4 text-sm font-medium text-green-600 hover:underline focus:outline-none"
-        >
-          Show less
-        </button>
-      ) : (
-        <button
-          onClick={handleSidebarExpand}
-          className="mt-4 text-sm font-medium text-green-600 hover:underline focus:outline-none"
-        >
-          More Info
-        </button>
-      )}
+      <button
+        onClick={handleSidebarExpand}
+        className="mt-4 text-sm font-medium text-green-600 hover:underline focus:outline-none"
+      >
+        Details
+      </button>
     </motion.div>
   );
 }
