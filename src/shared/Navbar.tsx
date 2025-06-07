@@ -36,7 +36,7 @@ export default function Navbar() {
   }, [token]);
 
   return (
-    <nav className="navbar flex flex-col bg-white bg-opacity-95 backdrop-blur-sm shadow-lg shadow-black/10 fixed top-0 left-0 right-0 z-50">
+    <nav className="navbar flex flex-col bg-white bg-opacity-95 backdrop-blur-sm shadow-md shadow-black/10 fixed top-0 left-0 right-0 z-50">
       <div className="nav-top border-b border-black/10 px-[2rem] lg:px-[3rem] py-[1rem]">
         <div className="max-w-[2000px] mx-auto w-full flex items-center justify-between">
           <div className="left-nav flex items-center gap-3">
