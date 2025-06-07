@@ -21,7 +21,7 @@ const PlantCareList = ({
   setIsFormOpen,
   setIsSidebarOpen,
 }: PlantCareListProps) => {
-  const { token, userData, selectedPlant, setSelectedPlant } =
+  const { token, userData, selectedPlant, setSelectedPlant, expandedCardId } =
     useContext(StoreContext);
   const [loading, setLoading] = useState(true);
   const [plants, setPlants] = useState<pcPlant[]>([]);
@@ -116,6 +116,7 @@ const PlantCareList = ({
                 plant={plant}
                 setIsModalOpen={setIsModalOpen}
                 setIsSidebarOpen={setIsSidebarOpen}
+                expanded={expandedCardId === plant._id}
                 onUpdated={(upd) =>
                   setPlants((prev) =>
                     prev.map((x) => (x._id === upd._id ? upd : x))
