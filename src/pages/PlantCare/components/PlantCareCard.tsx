@@ -25,24 +25,23 @@ import { WaterCountdown } from "./WaterCountdown";
 interface PlantCareCardProps {
   plant: pcPlant;
   setIsModalOpen?: Dispatch<SetStateAction<boolean>>;
-  setSelectedPlant?: (plant: pcPlant) => void;
   onUpdated: (upd: pcPlant) => void;
-  setIsSidbarOpen?: Dispatch<SetStateAction<boolean>>;
+  setIsSidebarOpen?: Dispatch<SetStateAction<boolean>>;
+  expanded?: boolean;
 }
 
 export default function PlantCareCard({
   plant,
   setIsModalOpen,
-  setSelectedPlant,
   onUpdated,
-  setIsSidbarOpen,
+  setIsSidebarOpen,
 }: PlantCareCardProps) {
   const [selectedPlantID, setSelectedPlantID] = useState(plant._id);
   const [groundArea, setGroundArea] = useState(plant.groundArea);
   const [isWatered, setIsWatered] = useState(plant.isWatered);
   const [isEditing, setIsEditing] = useState(false);
 
-  const { token } = useContext(StoreContext);
+  const { token, setSelectedPlant } = useContext(StoreContext);
   const plantOptions = usePlantOptions();
 
   useEffect(() => {
@@ -61,14 +60,14 @@ export default function PlantCareCard({
 
   const handleOpenModal = () => {
     if (!plant) return;
-    setIsSidbarOpen?.(false);
+    setIsSidebarOpen?.(false);
     setSelectedPlant?.(plant);
     setIsModalOpen?.(true);
   };
 
-  const handleToggleExpand = () => {
+  const handleSidebarExpand = () => {
     setSelectedPlant?.(plant);
-    setIsSidbarOpen?.(true);
+    setIsSidebarOpen?.(true);
   };
 
   const handleSave = async () => {
@@ -227,10 +226,10 @@ export default function PlantCareCard({
       </div>
 
       <button
-        onClick={handleToggleExpand}
+        onClick={handleSidebarExpand}
         className="mt-4 text-sm font-medium text-green-600 hover:underline focus:outline-none"
       >
-        More Info
+        Details
       </button>
     </motion.div>
   );
