@@ -48,25 +48,24 @@ export default function Sidebar({ isExpanded, onClose }: SidebarProps) {
             ? "opacity-100 transition-opacity duration-200 h-full flex flex-col"
             : "opacity-0 pointer-events-none transition-opacity duration-200"
         }
-        style={{ height: "100%" }} // Ensure it stretches
+        style={{ height: "100%" }}
       >
         {isExpanded && selectedPlant && (
           <>
             <div className="flex items-center justify-between px-4 pt-4 pb-2 font-bold text-lg text-[#2e7d32] truncate">
-              <span className="flex items-center gap-2">
+              <span className="flex items-center text-[20px] gap-2">
                 <GiPlantRoots size={20} />
                 {selectedPlant.plant_name}
               </span>
-              {isExpanded && (
-                <button
-                  onClick={onClose}
-                  className="p-1 rounded-full hover:bg-gray-100 focus:outline-none transition"
-                  aria-label="Close sidebar"
-                  type="button"
-                >
-                  <MdClose className="h-5 w-5 text-gray-500" />
-                </button>
-              )}
+
+              <button
+                onClick={onClose}
+                className="p-1 rounded-full hover:bg-gray-100 focus:outline-none transition"
+                aria-label="Close sidebar"
+                type="button"
+              >
+                <MdClose className="h-5 w-5 text-gray-500" />
+              </button>
             </div>
             <div className="bg-white shadow-lg rounded-md flex-1 flex flex-col">
               <TabGroup className="flex-1 flex flex-col">
