@@ -32,13 +32,13 @@ const IdentifiedPlantCard = ({
           alt="plant image"
         />
       </div>
-      <div className="px-3 pt-3">
+      <div className="px-3 pt-3 ">
         <p className="text-left font-bold">
           {plantResult?.name || plant?.info.name || "Unknown Plant"}
         </p>
 
         <h3
-          className={`font-bold text-left ${
+          className={`font-bold  ${
             plantResult?.condition === "healthy" ||
             plant?.info.condition === "healthy"
               ? "text-green-600"
