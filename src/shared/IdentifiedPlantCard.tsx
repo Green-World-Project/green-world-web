@@ -38,7 +38,7 @@ const IdentifiedPlantCard = ({
         </p>
 
         <h3
-          className={`font-bold ${
+          className={`font-bold text-left ${
             plantResult?.condition === "healthy" ||
             plant?.info.condition === "healthy"
               ? "text-green-600"
