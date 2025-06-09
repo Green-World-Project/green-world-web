@@ -22,10 +22,10 @@ export default function Sidebar({ isExpanded, onClose }: SidebarProps) {
   return (
     <motion.div
       initial={{ width: 0, opacity: 0 }}
-      animate={{ width: isExpanded ? 256 : 0, opacity: isExpanded ? 1 : 0 }}
+      animate={{ width: isExpanded ? 300 : 0, opacity: isExpanded ? 1 : 0 }}
       exit={{ width: 0, opacity: 0 }}
       transition={{
-        width: { duration: 0.5, ease: "easeInOut" },
+        width: { duration: 0.3, ease: "easeInOut" },
         opacity: { duration: 0.3, ease: "easeInOut" },
       }}
       className={classNames(
@@ -36,9 +36,9 @@ export default function Sidebar({ isExpanded, onClose }: SidebarProps) {
         isExpanded && "border-l"
       )}
       style={{
-        width: isExpanded ? 256 : 0,
+        width: isExpanded ? 280 : 0,
         minWidth: 0,
-        maxWidth: 256,
+        maxWidth: 300,
         overflow: isExpanded ? "auto" : "hidden",
       }}
     >
