@@ -12,10 +12,8 @@ import { GiPlantWatering } from "react-icons/gi";
 import { GiWateringCan } from "react-icons/gi";
 import { MdClose, MdEdit, MdSave } from "react-icons/md";
 import { IoMdTrash } from "react-icons/io";
-
 import { StoreContext } from "../../../context/StoreContext";
 import { usePlantOptions } from "../../../hooks/usePlantOptions";
-
 import axios from "axios";
 import { pcs } from "../../../constants/END_POINTS";
 import { toast } from "react-toastify";
