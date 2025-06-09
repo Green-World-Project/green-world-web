@@ -32,8 +32,8 @@ const IdentifiedPlantCard = ({
           alt="plant image"
         />
       </div>
-      <div className="px-3 pt-3 ">
-        <p className="text-left font-bold">
+      <div className="px-3 pt-3 text-left">
+        <p className=" font-bold">
           {plantResult?.name || plant?.info.name || "Unknown Plant"}
         </p>
 
