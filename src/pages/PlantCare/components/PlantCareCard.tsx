@@ -60,7 +60,6 @@ export default function PlantCareCard({
 
   const handleOpenModal = () => {
     if (!plant) return;
-    setIsSidebarOpen?.(false);
     setSelectedPlant?.(plant);
     setIsModalOpen?.(true);
   };
