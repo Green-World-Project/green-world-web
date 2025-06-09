@@ -17,12 +17,13 @@ function ChangePass() {
         <div className="relative flex items-center">
           <input
             id="yourPassword"
-            placeholder="●●●●●●●●●●●●●"
+            placeholder="••••••••"
             autoComplete="current-password"
             type={currPasswordShow ? "text" : "password"}
             {...register("currentPassword")}
             className={`
-              pl-2 pr-8 py-1 w-full rounded-sm shadow-sm outline-none placeholder-gray-500 placeholder:text-base placeholder:font-normal
+              pl-2 pr-8 py-1 w-full rounded-sm shadow-sm outline-none
+              placeholder-gray-400 placeholder:text-base placeholder:font-normal
               focus:ring-2 focus:ring-[#2ecc71] bg-[#E1F1F1] transition duration-300 ease-in-out
             `}
           />
@@ -54,12 +55,13 @@ function ChangePass() {
         <div className="relative flex items-center">
           <input
             id="newPassword"
-            placeholder="●●●●●●●●●●●●●"
+            placeholder="••••••••"
             autoComplete="new-password"
             type={newPasswordShow ? "text" : "password"}
             {...register("newPassword")}
             className={`
-              pl-2 pr-8 py-1 w-full rounded-sm shadow-sm outline-none placeholder-gray-500 placeholder:text-base placeholder:font-normal
+              pl-2 pr-8 py-1 w-full rounded-sm shadow-sm outline-none
+              placeholder-gray-400 placeholder:text-base placeholder:font-normal
               focus:ring-2 focus:ring-[#2ecc71] bg-[#E1F1F1] transition duration-300 ease-in-out
             `}
           />
