@@ -21,8 +21,7 @@ const PlantCareList = ({
   setIsFormOpen,
   setIsSidebarOpen,
 }: PlantCareListProps) => {
-  const { token, userData, selectedPlant, setSelectedPlant } =
-    useContext(StoreContext);
+  const { token, userData, selectedPlant } = useContext(StoreContext);
   const [loading, setLoading] = useState(true);
   const [plants, setPlants] = useState<pcPlant[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -74,7 +73,7 @@ const PlantCareList = ({
         error instanceof Error ? error.message : "Something went wrong"
       );
     }
-
+    setIsSidebarOpen?.(false);
     setIsModalOpen(false);
   };
 
@@ -89,8 +88,12 @@ const PlantCareList = ({
       ) : (
         <motion.div
           className="grid w-full gap-x-6 gap-y-10 mb-16 
-          [grid-template-columns:repeat(auto-fit,minmax(auto,1fr))] 
-          sm:[grid-template-columns:repeat(auto-fit,minmax(300px,1fr))]"
+        auto-rows-max
+    [grid-template-columns:repeat(auto-fill,minmax(300px,1fr))] 
+     max-sm:grid-cols-1
+    justify-start
+    "
+          style={{ maxWidth: "100%" }}
           initial="hidden"
           animate="visible"
           variants={{
@@ -136,7 +139,6 @@ const PlantCareList = ({
       <ConfirmationModal
         onConfirm={handleRemovePlant}
         onClose={() => {
-          setSelectedPlant(null);
           setIsModalOpen(false);
         }}
         isOpen={isModalOpen}
