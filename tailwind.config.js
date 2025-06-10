@@ -12,7 +12,7 @@ export default {
         darkGreen: "#1b5e20",
       },
       fontFamily: {
-        sans: ["Lora", "sans-serif"],
+        sans: ["poppins", "sans-serif"],
       },
       keyframes: {
         float: {
