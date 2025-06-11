@@ -4,11 +4,14 @@ FROM node:20-slim
 # Set working directory inside the container
 WORKDIR /app
 
-# Install dependencies
-RUN npm install
-
 # Copy the rest of the app files
 COPY . .
+
+# Install TypeScript globally (optional if already in your deps)
+RUN npm install -g ts-node typescript
+
+# Install dependencies
+RUN npm install
 
 # Expose Vite's default dev server port
 EXPOSE 5173
