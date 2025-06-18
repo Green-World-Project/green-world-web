@@ -1,5 +1,7 @@
 # 🌱 Green World
 
+2
+
 **Green World** is a responsive, AI-powered web application for **plant identification** and **personalized plant care**.
 
 It allows users to upload plant images for intelligent analysis, track plant condition history, and manage a personal garden with automated watering reminders — all wrapped in a modern UI/UX experience.
